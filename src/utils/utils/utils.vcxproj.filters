@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="process">
+      <UniqueIdentifier>{d0122888-5330-4417-bbeb-5f6409e191bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hook">
+      <UniqueIdentifier>{1ea5acc2-bd17-4203-94fc-8c94495a0cf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system">
+      <UniqueIdentifier>{3f7b1e56-f4b0-4d1d-9e68-aeaf296a9465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="path">
+      <UniqueIdentifier>{f14eb311-a141-4a60-b9c7-ca5da134e885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stringex">
+      <UniqueIdentifier>{bf943436-0773-4f40-a8e3-b4884735dc88}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="process.h">
+      <Filter>process</Filter>
+    </ClInclude>
+    <ClInclude Include="hook.h">
+      <Filter>hook</Filter>
+    </ClInclude>
+    <ClInclude Include="system.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="path.h">
+      <Filter>path</Filter>
+    </ClInclude>
+    <ClInclude Include="stringex.h">
+      <Filter>stringex</Filter>
+    </ClInclude>
+    <ClInclude Include="icu_utf.h">
+      <Filter>stringex</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="process.cpp">
+      <Filter>process</Filter>
+    </ClCompile>
+    <ClCompile Include="hook.cpp">
+      <Filter>hook</Filter>
+    </ClCompile>
+    <ClCompile Include="system.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="path.cpp">
+      <Filter>path</Filter>
+    </ClCompile>
+    <ClCompile Include="stringex.cpp">
+      <Filter>stringex</Filter>
+    </ClCompile>
+    <ClCompile Include="icu_utf.cpp">
+      <Filter>stringex</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
