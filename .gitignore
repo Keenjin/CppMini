@@ -32,3 +32,5 @@
 *.app
 
 build.dir/
+vcxproj.user
+.vs/
