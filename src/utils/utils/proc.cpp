@@ -1,4 +1,4 @@
-#include "process.h"
+#include "proc.h"
 #include <windows.h>
 #include "system.h"
 #include "stringex.h"
@@ -37,7 +37,7 @@ namespace utils {
 	std::tuple<bool, bool> IsProcess64Bit(uint32_t processId)
 	{
 		WinHandle hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | SYNCHRONIZE, false, processId);
-		if (!hProcess.m_handle)
+		if (!hProcess)
 		{
 			return std::make_tuple(false, false);
 		}
@@ -45,7 +45,7 @@ namespace utils {
 		BOOL x86 = TRUE;
 		if (IsSystem64Bit())
 		{
-			bool success = !!IsWow64Process(hProcess.m_handle, &x86);
+			bool success = !!IsWow64Process(hProcess, &x86);
 			if (!success)
 			{
 				return std::make_tuple(false, false);

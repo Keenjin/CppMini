@@ -1,0 +1,2 @@
+#define HOOKLYRIC_API __declspec(dllexport)
+#define HOOKLYRIC_API __declspec(dllimport)

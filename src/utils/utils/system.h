@@ -12,10 +12,12 @@ namespace utils {
 		WinHandle(HANDLE handle = NULL);
 		~WinHandle();
 
-		inline HANDLE operator()() const;
-		inline WinHandle& operator = (const HANDLE& handle);
+		operator HANDLE() const;
+		WinHandle& operator = (const HANDLE& handle);
+		bool Invalid() const;
+		void Close();
 
-	public:
+	private:
 		HANDLE m_handle = NULL;
 	};
 

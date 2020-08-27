@@ -16,11 +16,11 @@
     <Filter Include="stringex">
       <UniqueIdentifier>{bf943436-0773-4f40-a8e3-b4884735dc88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="hook\detour">
+      <UniqueIdentifier>{29ea9549-df16-484d-8981-36c31166e99f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="process.h">
-      <Filter>process</Filter>
-    </ClInclude>
     <ClInclude Include="hook.h">
       <Filter>hook</Filter>
     </ClInclude>
@@ -36,11 +36,17 @@
     <ClInclude Include="icu_utf.h">
       <Filter>stringex</Filter>
     </ClInclude>
+    <ClInclude Include="detour\detours.h">
+      <Filter>hook\detour</Filter>
+    </ClInclude>
+    <ClInclude Include="detour\detver.h">
+      <Filter>hook\detour</Filter>
+    </ClInclude>
+    <ClInclude Include="proc.h">
+      <Filter>process</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="process.cpp">
-      <Filter>process</Filter>
-    </ClCompile>
     <ClCompile Include="hook.cpp">
       <Filter>hook</Filter>
     </ClCompile>
@@ -55,6 +61,30 @@
     </ClCompile>
     <ClCompile Include="icu_utf.cpp">
       <Filter>stringex</Filter>
+    </ClCompile>
+    <ClCompile Include="detour\creatwth.cpp">
+      <Filter>hook\detour</Filter>
+    </ClCompile>
+    <ClCompile Include="detour\detours.cpp">
+      <Filter>hook\detour</Filter>
+    </ClCompile>
+    <ClCompile Include="detour\disasm.cpp">
+      <Filter>hook\detour</Filter>
+    </ClCompile>
+    <ClCompile Include="detour\disolx64.cpp">
+      <Filter>hook\detour</Filter>
+    </ClCompile>
+    <ClCompile Include="detour\disolx86.cpp">
+      <Filter>hook\detour</Filter>
+    </ClCompile>
+    <ClCompile Include="detour\image.cpp">
+      <Filter>hook\detour</Filter>
+    </ClCompile>
+    <ClCompile Include="detour\modules.cpp">
+      <Filter>hook\detour</Filter>
+    </ClCompile>
+    <ClCompile Include="proc.cpp">
+      <Filter>process</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

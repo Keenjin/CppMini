@@ -97,6 +97,7 @@ static int inject_helper(wchar_t *argv[], const wchar_t *dll)
 
 int main(int argc, char *argv_ansi[])
 {
+	//MessageBox(NULL, L"inject_helper", NULL, MB_OK);
 	wchar_t dll_path[MAX_PATH];
 	LPWSTR pCommandLineW;
 	LPWSTR *argv;

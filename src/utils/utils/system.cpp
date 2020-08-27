@@ -9,7 +9,7 @@ namespace utils {
 #else
 		BOOL x86 = false;
 		bool success = !!IsWow64Process(GetCurrentProcess(), &x86);
-		return success && !!x86;
+		return success && !x86;
 #endif
 	}
 
@@ -21,22 +21,37 @@ namespace utils {
 
 	WinHandle::~WinHandle()
 	{
-		if (m_handle)
-		{
-			CloseHandle(m_handle);
-			m_handle = NULL;
-		}
+		Close();
 	}
 
-	inline HANDLE WinHandle::operator()() const
+	WinHandle::operator HANDLE() const
 	{
 		return m_handle;
 	}
 
-	inline WinHandle& WinHandle::operator = (const HANDLE& handle)
+	WinHandle& WinHandle::operator = (const HANDLE& handle)
 	{
 		m_handle = handle;
 		return *this;
+	}
+
+	bool WinHandle::Invalid() const
+	{
+		if (m_handle == NULL || m_handle == INVALID_HANDLE_VALUE)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	void WinHandle::Close()
+	{
+		if (!Invalid())
+		{
+			CloseHandle(m_handle);
+			m_handle = NULL;
+		}
 	}
 
 	HWND FindWndFirst(const WndMatchInfo& matchWnd)
