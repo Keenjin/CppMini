@@ -8,16 +8,31 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hook", "hook", "{6D900E9C-C509-47E9-B952-8F703F147ED8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "inject_helper", "src\inject_helper\inject_helper.vcxproj", "{851963FB-5F77-42E8-91D9-34FA62FC366F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F52D66A0-6094-44B9-9612-B577D33A994B} = {F52D66A0-6094-44B9-9612-B577D33A994B}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DA42D032-2708-4A14-B85D-49FEF9FB62C3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_inject_helper", "src\test\test_inject_helper\test_inject_helper.vcxproj", "{26A31E7B-6828-4E38-B395-C208260AAFE3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F52D66A0-6094-44B9-9612-B577D33A994B} = {F52D66A0-6094-44B9-9612-B577D33A994B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hook_dll_demo", "src\hook_dll_demo\hook_dll_demo.vcxproj", "{A60367F3-4E80-4031-A054-8F94D93634DD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F52D66A0-6094-44B9-9612-B577D33A994B} = {F52D66A0-6094-44B9-9612-B577D33A994B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hookLyric", "src\test\hookLyric\hookLyric.vcxproj", "{C9997F4A-7772-4519-99A1-D7FEA3D67365}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F52D66A0-6094-44B9-9612-B577D33A994B} = {F52D66A0-6094-44B9-9612-B577D33A994B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "show_lyric_demo", "src\test\show_lyric_demo\show_lyric_demo.vcxproj", "{07C18690-0846-4011-88F1-0742E781F533}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F52D66A0-6094-44B9-9612-B577D33A994B} = {F52D66A0-6094-44B9-9612-B577D33A994B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utils", "src\utils\utils.vcxproj", "{F52D66A0-6094-44B9-9612-B577D33A994B}"
 EndProject
