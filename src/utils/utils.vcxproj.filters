@@ -19,6 +19,9 @@
     <Filter Include="hook\detour">
       <UniqueIdentifier>{29ea9549-df16-484d-8981-36c31166e99f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{0e71f16f-c426-4bd4-b136-11ab067dbcda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\hook.h">
@@ -44,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="include\proc.h">
       <Filter>process</Filter>
+    </ClInclude>
+    <ClInclude Include="include\macros.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

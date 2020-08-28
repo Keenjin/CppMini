@@ -4,8 +4,6 @@
 
 namespace utils {
 
-	bool IsSystem64Bit();
-
 	class WinHandle
 	{
 	public:
@@ -21,47 +19,40 @@ namespace utils {
 		HANDLE m_handle = NULL;
 	};
 
-	enum MatchFilterType {
-		FILTER_TYPE_PROCESSNAME = 1,
-		FILTER_TYPE_TITLE = FILTER_TYPE_PROCESSNAME << 1,
-		FILTER_TYPE_CLASS = FILTER_TYPE_TITLE << 1,
-		FILTER_TYPE_WIDTH = FILTER_TYPE_CLASS << 1,
-		FILTER_TYPE_HEIGHT = FILTER_TYPE_WIDTH << 1,
-		FILTER_TYPE_STYLE = FILTER_TYPE_HEIGHT << 1,
-		FILTER_TYPE_EXSTYLE = FILTER_TYPE_STYLE << 1,
-		FILTER_TYPE_VISIBLE = FILTER_TYPE_EXSTYLE << 1,
-		FILTER_TYPE_TOP = FILTER_TYPE_VISIBLE << 1,
+	enum OSVersion {
+		PRE_XP = 0,  // Not supported.
+		XP = 1,
+		SERVER_2003 = 2,  // Also includes XP Pro x64 and Server 2003 R2.
+		VISTA = 3,        // Also includes Windows Server 2008.
+		WIN7 = 4,         // Also includes Windows Server 2008 R2.
+		WIN8 = 5,         // Also includes Windows Server 2012.
+		WIN8_1 = 6,       // Also includes Windows Server 2012 R2.
+		WIN10 = 7,        // Threshold 1: Version 1507, Build 10240.
+		WIN10_TH2 = 8,    // Threshold 2: Version 1511, Build 10586.
+		WIN10_RS1 = 9,    // Redstone 1: Version 1607, Build 14393.
+		WIN10_RS2 = 10,   // Redstone 2: Version 1703, Build 15063.
+		WIN10_RS3 = 11,   // Redstone 3: Version 1709, Build 16299.
+		WIN10_RS4 = 12,   // Redstone 4: Version 1803, Build 17134.
+		WIN10_RS5 = 13,   // Redstone 5: Version 1809, Build 17763.
+		WIN10_19H1 = 14,  // 19H1: Version 1903, Build 18362.
+		// On edit, update tools\metrics\histograms\enums.xml "WindowsVersion" and
+		// "GpuBlacklistFeatureTestResultsWindows2".
+		WIN_LAST,  // Indicates error condition.
 	};
 
-	typedef struct _WndMatchInfo 
-	{
-		uint32_t matchFilter = FILTER_TYPE_VISIBLE | FILTER_TYPE_PROCESSNAME | FILTER_TYPE_TITLE | FILTER_TYPE_CLASS;
+	// A rough bucketing of the available types of versions of Windows. This is used
+	// to distinguish enterprise enabled versions from home versions and potentially
+	// server versions. Keep these values in the same order, since they are used as
+	// is for metrics histogram ids.
+	enum VersionType {
+		SUITE_HOME = 0,
+		SUITE_PROFESSIONAL,
+		SUITE_SERVER,
+		SUITE_ENTERPRISE,
+		SUITE_EDUCATION,
+		SUITE_LAST,
+	};
 
-		bool mustTop = false;
-		bool mustVisible = true;
-		std::wstring processName;
-		std::wstring title;
-		std::wstring className;
-		uint32_t width = 0;
-		uint32_t height = 0;
-		uint32_t style = 0;
-		uint32_t exStyle = 0;
-
-	}WndMatchInfo, *PWndMatchInfo;
-
-	// 严格匹配，查询第一个命中
-	HWND FindWndFirst(const WndMatchInfo& matchWnd);
-
-	// 找最相似的那个
-	// 目前打分算法权重：（待调整）
-	//		mustTop：44分
-	//		mustVisible：44分
-	//		processName：13分
-	//		title：10分
-	//		className：9分
-	//		width：1分
-	//		height：1分
-	//		style：1分
-	//		exStyle：1分
-	HWND FindWndFuzzyNearest(const WndMatchInfo& matchWnd);
+	bool IsSystem64Bit();
+	OSVersion GetOSVersion();
 }

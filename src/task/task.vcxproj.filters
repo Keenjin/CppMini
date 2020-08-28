@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="threading">
+      <UniqueIdentifier>{ab234c53-752a-4d62-a081-a7096a749aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="task">
+      <UniqueIdentifier>{c74cf9b0-4cd7-43a9-803c-e788a3d6322c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="thread.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="platform_thread.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="thread.cpp">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="platform_thread.cpp">
+      <Filter>threading</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
