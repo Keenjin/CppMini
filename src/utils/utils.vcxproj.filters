@@ -21,16 +21,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="hook.h">
+    <ClInclude Include="include\hook.h">
       <Filter>hook</Filter>
     </ClInclude>
-    <ClInclude Include="system.h">
+    <ClInclude Include="include\system.h">
       <Filter>system</Filter>
     </ClInclude>
-    <ClInclude Include="path.h">
+    <ClInclude Include="include\path.h">
       <Filter>path</Filter>
     </ClInclude>
-    <ClInclude Include="stringex.h">
+    <ClInclude Include="include\stringex.h">
       <Filter>stringex</Filter>
     </ClInclude>
     <ClInclude Include="icu_utf.h">
@@ -42,7 +42,7 @@
     <ClInclude Include="detour\detver.h">
       <Filter>hook\detour</Filter>
     </ClInclude>
-    <ClInclude Include="proc.h">
+    <ClInclude Include="include\proc.h">
       <Filter>process</Filter>
     </ClInclude>
   </ItemGroup>

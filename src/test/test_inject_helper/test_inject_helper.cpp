@@ -2,11 +2,11 @@
 //
 
 #include <iostream>
-#include "hook.h"
-#include "proc.h"
+#include "utils/hook.h"
+#include "utils/proc.h"
 #include <Windows.h>
 #include <assert.h>
-#include "path.h"
+#include "utils/path.h"
 #include <string>
 
 HWND InputLyricWnd()

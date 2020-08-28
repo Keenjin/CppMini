@@ -59,19 +59,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\base_project.props" />
+    <Import Project="..\..\..\base_project_mt.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\base_project.props" />
+    <Import Project="..\..\..\base_project_mt.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\base_project.props" />
+    <Import Project="..\..\..\base_project_mt.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\base_project.props" />
+    <Import Project="..\..\..\base_project_mt.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -174,31 +174,10 @@
     <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\utils\utils\detour\creatwth.cpp" />
-    <ClCompile Include="..\..\utils\utils\detour\detours.cpp" />
-    <ClCompile Include="..\..\utils\utils\detour\disasm.cpp" />
-    <ClCompile Include="..\..\utils\utils\detour\disolx64.cpp" />
-    <ClCompile Include="..\..\utils\utils\detour\disolx86.cpp" />
-    <ClCompile Include="..\..\utils\utils\detour\image.cpp" />
-    <ClCompile Include="..\..\utils\utils\detour\modules.cpp" />
-    <ClCompile Include="..\..\utils\utils\hook.cpp" />
-    <ClCompile Include="..\..\utils\utils\icu_utf.cpp" />
-    <ClCompile Include="..\..\utils\utils\path.cpp" />
-    <ClCompile Include="..\..\utils\utils\proc.cpp" />
-    <ClCompile Include="..\..\utils\utils\stringex.cpp" />
-    <ClCompile Include="..\..\utils\utils\system.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="hook_dll.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\utils\utils\detour\detours.h" />
-    <ClInclude Include="..\..\utils\utils\detour\detver.h" />
-    <ClInclude Include="..\..\utils\utils\hook.h" />
-    <ClInclude Include="..\..\utils\utils\icu_utf.h" />
-    <ClInclude Include="..\..\utils\utils\path.h" />
-    <ClInclude Include="..\..\utils\utils\proc.h" />
-    <ClInclude Include="..\..\utils\utils\stringex.h" />
-    <ClInclude Include="..\..\utils\utils\system.h" />
     <ClInclude Include="hook_dll.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

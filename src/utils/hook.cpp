@@ -1,9 +1,9 @@
-#include "hook.h"
-#include "proc.h"
-#include "path.h"
-#include "stringex.h"
+#include "include\hook.h"
+#include "include\proc.h"
+#include "include\path.h"
+#include "include\stringex.h"
 #include "detour/detours.h"
-#include "system.h"
+#include "include\system.h"
 #include <TlHelp32.h>
 #include <set>
 #include <tuple>

@@ -9,12 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="utils">
-      <UniqueIdentifier>{8e77d009-f85d-4e7c-81fb-4863334bfefb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="utils\detour">
-      <UniqueIdentifier>{e363e525-15cf-45ab-8b1b-e7d038476f5a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
@@ -26,73 +20,10 @@
     <ClCompile Include="hook_dll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils\utils\hook.cpp">
-      <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\icu_utf.cpp">
-      <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\path.cpp">
-      <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\proc.cpp">
-      <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\stringex.cpp">
-      <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\system.cpp">
-      <Filter>utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\detour\creatwth.cpp">
-      <Filter>utils\detour</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\detour\detours.cpp">
-      <Filter>utils\detour</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\detour\disasm.cpp">
-      <Filter>utils\detour</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\detour\disolx64.cpp">
-      <Filter>utils\detour</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\detour\disolx86.cpp">
-      <Filter>utils\detour</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\detour\image.cpp">
-      <Filter>utils\detour</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\utils\utils\detour\modules.cpp">
-      <Filter>utils\detour</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hook_dll.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\utils\utils\hook.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\utils\utils\icu_utf.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\utils\utils\path.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\utils\utils\proc.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\utils\utils\stringex.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\utils\utils\system.h">
-      <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\utils\utils\detour\detours.h">
-      <Filter>utils\detour</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\utils\utils\detour\detver.h">
-      <Filter>utils\detour</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

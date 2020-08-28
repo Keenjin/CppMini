@@ -1,6 +1,5 @@
 #include "hook_dll.h"
-#include "hook.h"
-#include "detour/detours.h"
+#include "utils/hook.h"
 
 static std::unique_ptr<HookLyric> hook_lyric;
 
