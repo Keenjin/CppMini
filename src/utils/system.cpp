@@ -1,5 +1,9 @@
 #include "include\system.h"
 #include "include\macros.h"
+#include "include\registry.h"
+#include "include\stringex.h"
+#include "include\path.h"
+#include <assert.h>
 
 namespace utils {
 
@@ -75,7 +79,7 @@ namespace utils {
 			key.ReadValue(L"ReleaseId", &release_id);
 		}
 
-		return std::make_pair(static_cast<int>(ubr), WideToUTF8(release_id));
+		return std::make_pair(static_cast<int>(ubr), WideToUtf8(release_id));
 	}
 
 	class OSInfo {
@@ -148,12 +152,35 @@ namespace utils {
 
 		// Like wow64_status(), but for the supplied handle instead of the current
 		// process.  This doesn't touch member state, so you can bypass the singleton.
-		static WOW64Status GetWOW64StatusForProcess(HANDLE process_handle);
+		static WOW64Status GetWOW64StatusForProcess(HANDLE process_handle) {
+			BOOL is_wow64 = FALSE;
+			if (!::IsWow64Process(process_handle, &is_wow64))
+				return WOW64_UNKNOWN;
+			return is_wow64 ? WOW64_ENABLED : WOW64_DISABLED;
+		}
 
 		const OSVersion& version() const { return version_; }
 
-		OSVersion Kernel32Version() const;
-		std::string Kernel32BaseVersion() const;
+		OSVersion Kernel32Version() const {
+			
+		}
+		std::wstring Kernel32BaseVersion() const {
+			static const NoDestructor<std::wstring> version([] {
+				std::unique_ptr<FileVersionInfo> file_version_info =
+					FileVersionInfo::CreateFileVersionInfo(
+						L"kernel32.dll");
+				if (!file_version_info) {
+					// crbug.com/912061: on some systems it seems kernel32.dll might be
+					// corrupted or not in a state to get version info. In this case try
+					// kernelbase.dll as a fallback.
+					file_version_info = FileVersionInfo::CreateFileVersionInfo(
+						L"kernelbase.dll");
+				}
+				assert(file_version_info);
+				return file_version_info->file_version();
+			}());
+			return *version;
+		}
 		// The next two functions return arrays of values, [major, minor(, build)].
 		const VersionNumber& version_number() const { return version_number_; }
 		const VersionType& version_type() const { return version_type_; }
@@ -164,11 +191,37 @@ namespace utils {
 			return allocation_granularity_;
 		}
 		const WOW64Status& wow64_status() const { return wow64_status_; }
-		std::string processor_model_name();
+		std::string processor_model_name() {
+			if (processor_model_name_.empty()) {
+				const wchar_t kProcessorNameString[] =
+					L"HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0";
+				RegKey key(HKEY_LOCAL_MACHINE, kProcessorNameString, KEY_READ);
+				std::wstring value;
+				key.ReadValue(L"ProcessorNameString", &value);
+				processor_model_name_ = WideToUtf8(value);
+			}
+			return processor_model_name_;
+		}
 		const std::string& release_id() const { return release_id_; }
 
 	private:
-		static OSInfo** GetInstanceStorage();
+		static OSInfo** GetInstanceStorage() {
+			// Note: we don't use the Singleton class because it depends on AtExitManager,
+			// and it's convenient for other modules to use this class without it.
+			static OSInfo* info = []() {
+				OSVERSIONINFOEXW version_info = { sizeof(version_info) };
+				//::GetVersionEx(reinterpret_cast<_OSVERSIONINFOW*>(&version_info));
+				VerifyVersionInfoW(reinterpret_cast<OSVERSIONINFOEXW*>(&version_info), 0, 0);
+
+				DWORD os_type = 0;
+				::GetProductInfo(version_info.dwMajorVersion, version_info.dwMinorVersion,
+					0, 0, &os_type);
+
+				return new OSInfo(version_info, GetSystemInfoStorage(), os_type);
+			}();
+
+			return &info;
+		}
 
 		OSInfo(const _OSVERSIONINFOEXW& version_info,
 			const _SYSTEM_INFO& system_info,
@@ -183,7 +236,7 @@ namespace utils {
 				version_number_.major, version_number_.minor, version_number_.build);
 			service_pack_.major = version_info.wServicePackMajor;
 			service_pack_.minor = version_info.wServicePackMinor;
-			service_pack_str_ = WideToUTF8(version_info.szCSDVersion);
+			service_pack_str_ = WideToUtf8(version_info.szCSDVersion);
 
 			processors_ = system_info.dwNumberOfProcessors;
 			allocation_granularity_ = system_info.dwAllocationGranularity;
@@ -258,10 +311,59 @@ namespace utils {
 				version_type_ = SUITE_HOME;
 			}
 		}
-		~OSInfo();
+		~OSInfo() {}
 
 		// Returns a Version value for a given OS version tuple.
-		static OSVersion MajorMinorBuildToVersion(int major, int minor, int build);
+		// With the exception of Server 2003, server variants are treated the same as
+		// the corresponding workstation release.
+		// static
+		OSVersion MajorMinorBuildToVersion(int major, int minor, int build) {
+			if (major == 10) {
+				if (build >= 18362)
+					return OSVersion::WIN10_19H1;
+				if (build >= 17763)
+					return OSVersion::WIN10_RS5;
+				if (build >= 17134)
+					return OSVersion::WIN10_RS4;
+				if (build >= 16299)
+					return OSVersion::WIN10_RS3;
+				if (build >= 15063)
+					return OSVersion::WIN10_RS2;
+				if (build >= 14393)
+					return OSVersion::WIN10_RS1;
+				if (build >= 10586)
+					return OSVersion::WIN10_TH2;
+				return OSVersion::WIN10;
+			}
+
+			if (major > 6) {
+				// Hitting this likely means that it's time for a >10 block above.
+				//NOTREACHED() << major << "." << minor << "." << build;
+				return OSVersion::WIN_LAST;
+			}
+
+			if (major == 6) {
+				switch (minor) {
+				case 0:
+					return OSVersion::VISTA;
+				case 1:
+					return OSVersion::WIN7;
+				case 2:
+					return OSVersion::WIN8;
+				default:
+					assert(minor == 3);
+					return OSVersion::WIN8_1;
+				}
+			}
+
+			if (major == 5 && minor != 0) {
+				// Treat XP Pro x64, Home Server, and Server 2003 R2 as Server 2003.
+				return minor == 1 ? OSVersion::XP : OSVersion::SERVER_2003;
+			}
+
+			// Win 2000 or older.
+			return OSVersion::PRE_XP;
+		}
 
 		OSVersion version_;
 		VersionNumber version_number_;

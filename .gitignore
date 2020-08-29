@@ -34,3 +34,4 @@
 build.dir/
 *.vcxproj.user
 .vs/
+bin/include/utils/

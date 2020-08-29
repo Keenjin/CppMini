@@ -118,7 +118,7 @@ namespace task {
 
 		// Returns the default thread stack size set by chrome. If we do not
 		// explicitly set default size then returns 0.
-		static size_t GetDefaultThreadStackSize();
+		static size_t GetDefaultThreadStackSize() { return 0; }
 
 	private:
 		static void SetCurrentThreadPriorityImpl(ThreadPriority priority);

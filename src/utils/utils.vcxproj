@@ -39,7 +39,7 @@
     <ProjectGuid>{F52D66A0-6094-44B9-9612-B577D33A994B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>utils</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -313,6 +313,7 @@
     <ClInclude Include="include\macros.h" />
     <ClInclude Include="include\path.h" />
     <ClInclude Include="include\proc.h" />
+    <ClInclude Include="include\registry.h" />
     <ClInclude Include="include\stringex.h" />
     <ClInclude Include="include\system.h" />
     <ClInclude Include="icu_utf.h" />
@@ -329,6 +330,7 @@
     <ClCompile Include="icu_utf.cpp" />
     <ClCompile Include="path.cpp" />
     <ClCompile Include="proc.cpp" />
+    <ClCompile Include="registry.cpp" />
     <ClCompile Include="stringex.cpp" />
     <ClCompile Include="system.cpp" />
   </ItemGroup>

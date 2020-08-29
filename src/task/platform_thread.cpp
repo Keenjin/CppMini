@@ -1,8 +1,123 @@
 #include "platform_thread.h"
 #include "utils/stringex.h"
 #include <assert.h>
+#include "utils/system.h"
 
 namespace task {
+
+	// The most common value returned by ::GetThreadPriority() after background
+	// thread mode is enabled on Windows 7.
+	constexpr int kWin7BackgroundThreadModePriority = 4;
+
+	struct ThreadParams {
+		PlatformThread::Delegate* delegate;
+		bool joinable;
+		ThreadPriority priority;
+	};
+
+	DWORD __stdcall ThreadFunc(void* params) {
+		ThreadParams* thread_params = static_cast<ThreadParams*>(params);
+		PlatformThread::Delegate* delegate = thread_params->delegate;
+
+		if (thread_params->priority != ThreadPriority::NORMAL)
+			PlatformThread::SetCurrentThreadPriority(thread_params->priority);
+
+		// Retrieve a copy of the thread handle to use as the key in the
+		// thread name mapping.
+		PlatformThreadHandle platform_handle;
+		BOOL did_dup = DuplicateHandle(GetCurrentProcess(),
+			GetCurrentThread(),
+			GetCurrentProcess(),
+			&platform_handle,
+			0,
+			FALSE,
+			DUPLICATE_SAME_ACCESS);
+
+		//win::ScopedHandle scoped_platform_handle;
+
+		//if (did_dup) {
+		//	scoped_platform_handle.Set(platform_handle);
+		//	ThreadIdNameManager::GetInstance()->RegisterThread(
+		//		scoped_platform_handle.Get(),
+		//		PlatformThread::CurrentId());
+		//}
+
+		delete thread_params;
+		delegate->ThreadMain();
+
+		//if (did_dup) {
+		//	ThreadIdNameManager::GetInstance()->RemoveName(
+		//		scoped_platform_handle.Get(),
+		//		PlatformThread::CurrentId());
+		//}
+
+		return 0;
+	}
+
+	// CreateThreadInternal() matches PlatformThread::CreateWithPriority(), except
+	// that |out_thread_handle| may be nullptr, in which case a non-joinable thread
+	// is created.
+	bool CreateThreadInternal(size_t stack_size,
+		PlatformThread::Delegate* delegate,
+		PlatformThreadHandle* out_thread_handle,
+		ThreadPriority priority) {
+		unsigned int flags = 0;
+		if (stack_size > 0) {
+			flags = STACK_SIZE_PARAM_IS_A_RESERVATION;
+#if defined(ARCH_CPU_32_BITS)
+		}
+		else {
+			// The process stack size is increased to give spaces to |RendererMain| in
+			// |chrome/BUILD.gn|, but keep the default stack size of other threads to
+			// 1MB for the address space pressure.
+			flags = STACK_SIZE_PARAM_IS_A_RESERVATION;
+			stack_size = 1024 * 1024;
+#endif
+		}
+
+		ThreadParams* params = new ThreadParams;
+		params->delegate = delegate;
+		params->joinable = out_thread_handle != nullptr;
+		params->priority = priority;
+
+		void* thread_handle;
+		{
+			//SCOPED_UMA_HISTOGRAM_TIMER("Windows.CreateThreadTime");
+
+			// Using CreateThread here vs _beginthreadex makes thread creation a bit
+			// faster and doesn't require the loader lock to be available.  Our code
+			// will  have to work running on CreateThread() threads anyway, since we run
+			// code on the Windows thread pool, etc.  For some background on the
+			// difference:
+			//   http://www.microsoft.com/msj/1099/win32/win321099.aspx
+			thread_handle =
+				::CreateThread(nullptr, stack_size, ThreadFunc, params, flags, nullptr);
+		}
+
+		if (!thread_handle) {
+			DWORD last_error = ::GetLastError();
+
+			switch (last_error) {
+			case ERROR_NOT_ENOUGH_MEMORY:
+			case ERROR_OUTOFMEMORY:
+			case ERROR_COMMITMENT_LIMIT:
+				assert(false);
+				break;
+
+			default:
+				break;
+			}
+
+			delete params;
+			return false;
+		}
+
+		if (out_thread_handle)
+			*out_thread_handle = PlatformThreadHandle(thread_handle);
+		else
+			CloseHandle(thread_handle);
+		return true;
+	}
 
 	// static
 	void PlatformThread::SetCurrentThreadPriority(ThreadPriority priority) {
@@ -142,16 +257,16 @@ namespace task {
 					::GetModuleHandle(L"Kernel32.dll"), "GetThreadInformation"));
 
 			if (!get_thread_information_fn) {
-				DCHECK_EQ(win::GetVersion(), win::Version::WIN7);
+				assert(utils::GetOSVersion() == utils::OSVersion::WIN7);
 				return;
 			}
 
 			MEMORY_PRIORITY_INFORMATION memory_priority_information = {};
-			DCHECK(get_thread_information_fn(thread, ::ThreadMemoryPriority,
+			assert(get_thread_information_fn(thread, ::ThreadMemoryPriority,
 				&memory_priority_information,
 				sizeof(memory_priority_information)));
 
-			DCHECK_EQ(memory_priority,
+			assert(memory_priority ==
 				static_cast<int>(memory_priority_information.MemoryPriority));
 #endif
 		}
@@ -190,17 +305,15 @@ namespace task {
 			desired_priority = THREAD_PRIORITY_TIME_CRITICAL;
 			break;
 		default:
-			NOTREACHED() << "Unknown priority.";
+			assert(false && "Unknown priority.");
 			break;
 		}
-		DCHECK_NE(desired_priority, THREAD_PRIORITY_ERROR_RETURN);
+		assert(desired_priority != THREAD_PRIORITY_ERROR_RETURN);
 
-#if DCHECK_IS_ON()
-		const BOOL success =
-#endif
+		//const BOOL success =
 			::SetThreadPriority(thread_handle, desired_priority);
-		DPLOG_IF(ERROR, !success) << "Failed to set thread priority to "
-			<< desired_priority;
+		//DPLOG_IF(ERROR, !success) << "Failed to set thread priority to "
+		//	<< desired_priority;
 
 		if (use_thread_mode_background && priority == ThreadPriority::BACKGROUND) {
 			// In a background process, THREAD_MODE_BACKGROUND_BEGIN lowers the memory
@@ -216,6 +329,63 @@ namespace task {
 			}
 		}
 
-		DCHECK_EQ(GetCurrentThreadPriority(), priority);
+		assert(GetCurrentThreadPriority() == priority);
+	}
+
+	// static
+	ThreadPriority PlatformThread::GetCurrentThreadPriority() {
+		static_assert(
+			THREAD_PRIORITY_IDLE < 0,
+			"THREAD_PRIORITY_IDLE is >= 0 and will incorrectly cause errors.");
+		static_assert(
+			THREAD_PRIORITY_LOWEST < 0,
+			"THREAD_PRIORITY_LOWEST is >= 0 and will incorrectly cause errors.");
+		static_assert(THREAD_PRIORITY_BELOW_NORMAL < 0,
+			"THREAD_PRIORITY_BELOW_NORMAL is >= 0 and will incorrectly "
+			"cause errors.");
+		static_assert(
+			THREAD_PRIORITY_NORMAL == 0,
+			"The logic below assumes that THREAD_PRIORITY_NORMAL is zero. If it is "
+			"not, ThreadPriority::BACKGROUND may be incorrectly detected.");
+		static_assert(THREAD_PRIORITY_ABOVE_NORMAL >= 0,
+			"THREAD_PRIORITY_ABOVE_NORMAL is < 0 and will incorrectly be "
+			"translated to ThreadPriority::BACKGROUND.");
+		static_assert(THREAD_PRIORITY_HIGHEST >= 0,
+			"THREAD_PRIORITY_HIGHEST is < 0 and will incorrectly be "
+			"translated to ThreadPriority::BACKGROUND.");
+		static_assert(THREAD_PRIORITY_TIME_CRITICAL >= 0,
+			"THREAD_PRIORITY_TIME_CRITICAL is < 0 and will incorrectly be "
+			"translated to ThreadPriority::BACKGROUND.");
+		static_assert(THREAD_PRIORITY_ERROR_RETURN >= 0,
+			"THREAD_PRIORITY_ERROR_RETURN is < 0 and will incorrectly be "
+			"translated to ThreadPriority::BACKGROUND.");
+
+		const int priority =
+			::GetThreadPriority(PlatformThread::CurrentHandle());
+
+		// Negative values represent a background priority. We have observed -3, -4,
+		// -6 when THREAD_MODE_BACKGROUND_* is used. THREAD_PRIORITY_IDLE,
+		// THREAD_PRIORITY_LOWEST and THREAD_PRIORITY_BELOW_NORMAL are other possible
+		// negative values.
+		if (priority < THREAD_PRIORITY_NORMAL)
+			return ThreadPriority::BACKGROUND;
+
+		switch (priority) {
+		case kWin7BackgroundThreadModePriority:
+			assert(utils::GetOSVersion() == utils::OSVersion::WIN7);
+			return ThreadPriority::BACKGROUND;
+		case THREAD_PRIORITY_NORMAL:
+			return ThreadPriority::NORMAL;
+		case THREAD_PRIORITY_ABOVE_NORMAL:
+		case THREAD_PRIORITY_HIGHEST:
+			return ThreadPriority::DISPLAY;
+		case THREAD_PRIORITY_TIME_CRITICAL:
+			return ThreadPriority::REALTIME_AUDIO;
+		case THREAD_PRIORITY_ERROR_RETURN:
+			assert(false && "::GetThreadPriority error");
+		}
+
+		//NOTREACHED() << "::GetThreadPriority returned " << priority << ".";
+		return ThreadPriority::NORMAL;
 	}
 }

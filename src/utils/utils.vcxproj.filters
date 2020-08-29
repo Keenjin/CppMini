@@ -22,6 +22,9 @@
     <Filter Include="base">
       <UniqueIdentifier>{0e71f16f-c426-4bd4-b136-11ab067dbcda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="registry">
+      <UniqueIdentifier>{7dbf7719-cb8b-4dff-90e3-3677ab31594a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\hook.h">
@@ -50,6 +53,9 @@
     </ClInclude>
     <ClInclude Include="include\macros.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="include\registry.h">
+      <Filter>registry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="proc.cpp">
       <Filter>process</Filter>
+    </ClCompile>
+    <ClCompile Include="registry.cpp">
+      <Filter>registry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,8 +1,10 @@
 #pragma once
 
+#include "platform_thread.h"
+
 namespace task {
 
-	class 
+	class Thread : PlatformThread::Delegate
 	{
 	public:
 	protected:
