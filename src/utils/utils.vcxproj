@@ -317,6 +317,7 @@
     <ClInclude Include="include\stringex.h" />
     <ClInclude Include="include\system.h" />
     <ClInclude Include="icu_utf.h" />
+    <ClInclude Include="include\wnd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="detour\creatwth.cpp" />
@@ -333,6 +334,7 @@
     <ClCompile Include="registry.cpp" />
     <ClCompile Include="stringex.cpp" />
     <ClCompile Include="system.cpp" />
+    <ClCompile Include="wnd.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

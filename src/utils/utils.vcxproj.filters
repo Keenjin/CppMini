@@ -25,6 +25,9 @@
     <Filter Include="registry">
       <UniqueIdentifier>{7dbf7719-cb8b-4dff-90e3-3677ab31594a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="wnd">
+      <UniqueIdentifier>{e3ff9f7c-d8b5-4cc7-bc4a-d76e77625e2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\hook.h">
@@ -56,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="include\registry.h">
       <Filter>registry</Filter>
+    </ClInclude>
+    <ClInclude Include="include\wnd.h">
+      <Filter>wnd</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="registry.cpp">
       <Filter>registry</Filter>
+    </ClCompile>
+    <ClCompile Include="wnd.cpp">
+      <Filter>wnd</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
