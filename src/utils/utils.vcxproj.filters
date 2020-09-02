@@ -28,6 +28,21 @@
     <Filter Include="wnd">
       <UniqueIdentifier>{e3ff9f7c-d8b5-4cc7-bc4a-d76e77625e2f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="container">
+      <UniqueIdentifier>{4e806526-11c6-4981-a11f-fc1a78b9ded7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="observer">
+      <UniqueIdentifier>{a170058b-9b2b-4d62-acb3-229bae9ab0ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="smart_ptr">
+      <UniqueIdentifier>{90aff256-e08d-4dc8-8455-48609d30ebeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thread_local">
+      <UniqueIdentifier>{8a11050d-6440-40d7-90ed-7b420462c8e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sync">
+      <UniqueIdentifier>{af13ce94-321a-4710-a448-1ad7fbb48382}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\hook.h">
@@ -62,6 +77,72 @@
     </ClInclude>
     <ClInclude Include="include\wnd.h">
       <Filter>wnd</Filter>
+    </ClInclude>
+    <ClInclude Include="include\circular_deque.h">
+      <Filter>container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\container.h">
+      <Filter>container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vector_buffer.h">
+      <Filter>container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\observer.h">
+      <Filter>observer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\weak_ptr.h">
+      <Filter>smart_ptr</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ref_counted.h">
+      <Filter>smart_ptr</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scoped_refptr.h">
+      <Filter>smart_ptr</Filter>
+    </ClInclude>
+    <ClInclude Include="include\atomic_ref_count.h">
+      <Filter>smart_ptr</Filter>
+    </ClInclude>
+    <ClInclude Include="include\atomic_flag.h">
+      <Filter>smart_ptr</Filter>
+    </ClInclude>
+    <ClInclude Include="include\linked_list.h">
+      <Filter>container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thread_local.h">
+      <Filter>thread_local</Filter>
+    </ClInclude>
+    <ClInclude Include="include\thread_local_storage.h">
+      <Filter>thread_local</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lock.h">
+      <Filter>sync</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lock_impl.h">
+      <Filter>sync</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stl_util.h">
+      <Filter>container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\waitable_event.h">
+      <Filter>sync</Filter>
+    </ClInclude>
+    <ClInclude Include="include\span.h">
+      <Filter>container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\condition_variable.h">
+      <Filter>sync</Filter>
+    </ClInclude>
+    <ClInclude Include="include\atomic_sequence_num.h">
+      <Filter>sync</Filter>
+    </ClInclude>
+    <ClInclude Include="include\scoped_com_initializer.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="include\intrusive_heap.h">
+      <Filter>container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\small_map.h">
+      <Filter>container</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +190,36 @@
     </ClCompile>
     <ClCompile Include="wnd.cpp">
       <Filter>wnd</Filter>
+    </ClCompile>
+    <ClCompile Include="observer.cpp">
+      <Filter>observer</Filter>
+    </ClCompile>
+    <ClCompile Include="weak_ptr.cpp">
+      <Filter>smart_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="ref_counted.cpp">
+      <Filter>smart_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="atomic_flag.cpp">
+      <Filter>smart_ptr</Filter>
+    </ClCompile>
+    <ClCompile Include="thread_local_storage.cpp">
+      <Filter>thread_local</Filter>
+    </ClCompile>
+    <ClCompile Include="lock_impl.cpp">
+      <Filter>sync</Filter>
+    </ClCompile>
+    <ClCompile Include="waitable_event.cpp">
+      <Filter>sync</Filter>
+    </ClCompile>
+    <ClCompile Include="condition_variable.cpp">
+      <Filter>sync</Filter>
+    </ClCompile>
+    <ClCompile Include="scoped_com_initializer.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="intrusive_heap.cpp">
+      <Filter>container</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
