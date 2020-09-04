@@ -31,7 +31,7 @@ namespace task_schedule {
 		return true;
 	}
 
-	void WorkerThread::WakeUp() {
+	void WorkerThread::Submit() {
 		wake_up_event.Signal();
 	}
 

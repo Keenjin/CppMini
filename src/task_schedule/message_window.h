@@ -29,7 +29,7 @@ namespace task_schedule {
 
 		bool Create(const std::wstring& window_name);
 		HWND GetWnd() { return window_; }
-		void WakeUp();
+		void Submit();
 
 		LRESULT OnMsgProc(
 			UINT message,

@@ -1,17 +1,16 @@
 #pragma once
 #include "task_runner.h"
-#include "message_window.h"
+#include "thread_pool.h"
 #include "task_scheduler.h"
-#include "task.h"
 
 namespace task_schedule {
 
-	class TaskRunnerUI : 
-		public TaskRunner,
-		public MessageWindow::Delegate {
+	class TaskRunnerPool : 
+		public TaskRunner, 
+		public ThreadPool::Delegate {
 	public:
-		TaskRunnerUI(const std::wstring& name = L"");
-		~TaskRunnerUI();
+		TaskRunnerPool();
+		~TaskRunnerPool();
 
 		// TaskRunner
 		virtual bool PostTask(OnceClosure task, TaskPriority priority) override;
@@ -25,7 +24,7 @@ namespace task_schedule {
 		virtual void OnMainExit()  override;
 
 	private:
-		std::unique_ptr<MessageWindow>	msg_window;
+		std::unique_ptr<ThreadPool> thread_pool;
 		std::unique_ptr<TaskScheduler> task_scheduler;
 	};
 }

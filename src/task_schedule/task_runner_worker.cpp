@@ -13,7 +13,7 @@ namespace task_schedule {
 
 	bool TaskRunnerWorker::PostTask(OnceClosure task, TaskPriority priority) {
 		task_scheduler->AddTask(Task(std::move(task), priority));
-		task_thread->WakeUp();
+		task_thread->Submit();
 		return true;
 	}
 

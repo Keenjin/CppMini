@@ -28,7 +28,7 @@ namespace task_schedule {
 		WorkerThread(WorkerThread::Delegate* delegate);
 
 		bool Start();
-		void WakeUp();
+		void Submit();
 		void Cleanup();
 
 	private:

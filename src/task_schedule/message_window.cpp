@@ -139,7 +139,7 @@ namespace task_schedule {
 		return S_OK;
 	}
 
-	void MessageWindow::WakeUp() {
+	void MessageWindow::Submit() {
 		PostMessage(window_, kMessageCommunition, NULL, NULL);
 	}
 }

@@ -2,6 +2,7 @@
 #include "task_runner_ui.h"
 #include "task_runner_worker.h"
 #include "utils/scoped_refptr.h"
+#include "task_runner_pool.h"
 
 namespace task_schedule {
 
@@ -11,6 +12,10 @@ namespace task_schedule {
 
 	utils::scoped_refptr<TaskRunner> CreateTaskRunnerBackground() {
 		return utils::MakeRefCounted<TaskRunnerWorker>();
+	}
+
+	utils::scoped_refptr<TaskRunner> CreateTaskRunnerPool() {
+		return utils::MakeRefCounted<TaskRunnerPool>();
 	}
 
 	bool TaskExecutor::CreateTaskRunner(TaskThreadType type) {
@@ -32,6 +37,12 @@ namespace task_schedule {
 			}
 			return true;
 		}
+		case TaskThreadType::Pool:
+			if (!GetTaskRunner(type)) {
+				auto task_runner = CreateTaskRunnerPool();
+				AddNewTaskRunner(type, task_runner);
+			}
+			return true;
 		}
 
 		return false;

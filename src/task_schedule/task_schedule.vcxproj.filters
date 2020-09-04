@@ -78,6 +78,12 @@
     <ClInclude Include="task_def.h">
       <Filter>tasks\task_and_trait</Filter>
     </ClInclude>
+    <ClInclude Include="thread_pool.h">
+      <Filter>tasks\work_thread</Filter>
+    </ClInclude>
+    <ClInclude Include="task_runner_pool.h">
+      <Filter>tasks\task_runner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="post_task.cpp">
@@ -115,6 +121,12 @@
     </ClCompile>
     <ClCompile Include="callback_internal.cpp">
       <Filter>tasks\task_and_trait\callback</Filter>
+    </ClCompile>
+    <ClCompile Include="thread_pool.cpp">
+      <Filter>tasks\work_thread</Filter>
+    </ClCompile>
+    <ClCompile Include="task_runner_pool.cpp">
+      <Filter>tasks\task_runner</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

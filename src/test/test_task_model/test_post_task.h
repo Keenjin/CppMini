@@ -23,20 +23,20 @@ public:
 void test_post_task() {
 	utils::scoped_refptr<CTest> a = new CTest;
 	task_schedule::Register(task_schedule::TaskThreadType::UI);
-	task_schedule::Register(task_schedule::TaskThreadType::Background);
+	task_schedule::Register(task_schedule::TaskThreadType::Pool);
 	task_schedule::PostTask(task_schedule::TaskThreadType::UI, task_schedule::BindOnce(&CTest::Test2, a, 1));
 	task_schedule::PostTask(task_schedule::TaskThreadType::UI, task_schedule::BindOnce(Test1, 2));
 	task_schedule::PostTask(task_schedule::TaskThreadType::UI, task_schedule::BindOnce(Test1, 3));
 	task_schedule::PostTask(task_schedule::TaskThreadType::UI, task_schedule::BindOnce(Test1, 4));
-	task_schedule::PostTask(task_schedule::TaskThreadType::UI, task_schedule::BindOnce(Test1, 5));
-	task_schedule::PostTask(task_schedule::TaskThreadType::Background, task_schedule::BindOnce(Test1, 6), task_schedule::TaskPriority::HIGHEST);
-	task_schedule::PostTask(task_schedule::TaskThreadType::Background, task_schedule::BindOnce(Test1, 7));
-	task_schedule::PostTask(task_schedule::TaskThreadType::Background, task_schedule::BindOnce(Test1, 8), task_schedule::TaskPriority::LOWEST);
-	task_schedule::PostTask(task_schedule::TaskThreadType::Background, task_schedule::BindOnce(Test1, 9));
-	task_schedule::PostTask(task_schedule::TaskThreadType::Background, task_schedule::BindOnce(Test1, 10));
-	task_schedule::PostTask(task_schedule::TaskThreadType::Background, task_schedule::BindOnce(Test1, 11));
+	task_schedule::PostTask(task_schedule::TaskThreadType::Pool, task_schedule::BindOnce(Test1, 5));
+	task_schedule::PostTask(task_schedule::TaskThreadType::Pool, task_schedule::BindOnce(Test1, 6), task_schedule::TaskPriority::HIGHEST);
+	task_schedule::PostTask(task_schedule::TaskThreadType::Pool, task_schedule::BindOnce(Test1, 7));
+	task_schedule::PostTask(task_schedule::TaskThreadType::Pool, task_schedule::BindOnce(Test1, 8), task_schedule::TaskPriority::LOWEST);
+	task_schedule::PostTask(task_schedule::TaskThreadType::Pool, task_schedule::BindOnce(Test1, 9));
+	task_schedule::PostTask(task_schedule::TaskThreadType::Pool, task_schedule::BindOnce(Test1, 10));
+	task_schedule::PostTask(task_schedule::TaskThreadType::Pool, task_schedule::BindOnce(Test1, 11));
 
-	task_schedule::RunLoop();
+	task_schedule::RunUILoopForTest();
 
 	task_schedule::UnRegisterAll();
 }

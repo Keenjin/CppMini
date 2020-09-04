@@ -32,9 +32,11 @@
     <ClInclude Include="task_executor.h" />
     <ClInclude Include="task_queue.h" />
     <ClInclude Include="task_runner.h" />
+    <ClInclude Include="task_runner_pool.h" />
     <ClInclude Include="task_scheduler.h" />
     <ClInclude Include="task_runner_ui.h" />
     <ClInclude Include="task_runner_worker.h" />
+    <ClInclude Include="thread_pool.h" />
     <ClInclude Include="worker_thread.h" />
   </ItemGroup>
   <ItemGroup>
@@ -46,9 +48,11 @@
     <ClCompile Include="task_executor.cpp" />
     <ClCompile Include="task_queue.cpp" />
     <ClCompile Include="task_runner.cpp" />
+    <ClCompile Include="task_runner_pool.cpp" />
     <ClCompile Include="task_scheduler.cpp" />
     <ClCompile Include="task_runner_ui.cpp" />
     <ClCompile Include="task_runner_worker.cpp" />
+    <ClCompile Include="thread_pool.cpp" />
     <ClCompile Include="worker_thread.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

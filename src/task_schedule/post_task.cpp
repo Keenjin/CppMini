@@ -13,8 +13,10 @@ namespace task_schedule {
 	}
 
 	void UnRegisterAll() {
-		UnRegister(TaskThreadType::UI);
-		UnRegister(TaskThreadType::Background);
+		for (int8_t i = 0; i < static_cast<int8_t>(TaskThreadType::Max); i++)
+		{
+			UnRegister(static_cast<TaskThreadType>(i));
+		}
 	}
 
 	bool PostTask(TaskThreadType type, OnceClosure task, TaskPriority priority) {
@@ -25,7 +27,7 @@ namespace task_schedule {
 		return GetTaskExecutor()->GetTaskRunner(type)->PostTaskAndReply(std::move(task), std::move(reply), priority);
 	}
 
-	void RunLoop() {
+	void RunUILoopForTest() {
 		MSG msg;
 		while (GetMessageW(&msg, NULL, 0, 0))
 		{

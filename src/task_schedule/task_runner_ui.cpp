@@ -2,10 +2,10 @@
 
 namespace task_schedule {
 
-	TaskRunnerUI::TaskRunnerUI()
+	TaskRunnerUI::TaskRunnerUI(const std::wstring& name/* = L""*/)
 		: msg_window(new MessageWindow(this))
 		, task_scheduler(new TaskScheduler) {
-		msg_window->Create(L"test");
+		msg_window->Create(name.empty() ? L"{EC1BC36F-C715-4D45-B18E-B5DA872C414F}" : name);
 	}
 	TaskRunnerUI::~TaskRunnerUI() {
 		msg_window.reset();
@@ -16,7 +16,7 @@ namespace task_schedule {
 		task_scheduler->AddTask(Task(std::move(task), priority));
 
 		// wakeup
-		msg_window->WakeUp();
+		msg_window->Submit();
 
 		return true;
 	}
