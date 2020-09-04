@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="tasks">
+      <UniqueIdentifier>{dff48da5-5532-4aa3-8bdf-0c00eb66abf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tasks\work_thread">
+      <UniqueIdentifier>{b8c80ac8-6530-4d75-bb63-5a27db239608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tasks\task_runner">
+      <UniqueIdentifier>{d23c426e-f78d-4f22-89ec-1d1e10b46c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tasks\task_runner_factory">
+      <UniqueIdentifier>{7ae68e31-adf2-44b5-880c-8d11e99f16ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tasks\task_schedule">
+      <UniqueIdentifier>{5e05790b-91e5-4ab3-857c-a3905ef0e49e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tasks\task_and_trait">
+      <UniqueIdentifier>{c57b64c5-a957-43f3-b368-83e56a5a6a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tasks\task_and_trait\callback">
+      <UniqueIdentifier>{0eab1c64-e8dd-4fb6-8b8c-4dc0ea2b6e7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tasks\task_and_trait\bind">
+      <UniqueIdentifier>{b72ad5e2-71ee-4996-a409-d373fe25b849}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="post_task.h">
+      <Filter>tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="platform_thread.h">
+      <Filter>tasks\work_thread</Filter>
+    </ClInclude>
+    <ClInclude Include="message_window.h">
+      <Filter>tasks\work_thread</Filter>
+    </ClInclude>
+    <ClInclude Include="worker_thread.h">
+      <Filter>tasks\work_thread</Filter>
+    </ClInclude>
+    <ClInclude Include="task_runner_ui.h">
+      <Filter>tasks\task_runner</Filter>
+    </ClInclude>
+    <ClInclude Include="task_runner_worker.h">
+      <Filter>tasks\task_runner</Filter>
+    </ClInclude>
+    <ClInclude Include="task_executor.h">
+      <Filter>tasks\task_runner_factory</Filter>
+    </ClInclude>
+    <ClInclude Include="task.h">
+      <Filter>tasks\task_and_trait</Filter>
+    </ClInclude>
+    <ClInclude Include="task_scheduler.h">
+      <Filter>tasks\task_schedule</Filter>
+    </ClInclude>
+    <ClInclude Include="task_runner.h">
+      <Filter>tasks\task_runner</Filter>
+    </ClInclude>
+    <ClInclude Include="task_queue.h">
+      <Filter>tasks\task_schedule</Filter>
+    </ClInclude>
+    <ClInclude Include="callback.h">
+      <Filter>tasks\task_and_trait\callback</Filter>
+    </ClInclude>
+    <ClInclude Include="callback_forward.h">
+      <Filter>tasks\task_and_trait\callback</Filter>
+    </ClInclude>
+    <ClInclude Include="callback_internal.h">
+      <Filter>tasks\task_and_trait\callback</Filter>
+    </ClInclude>
+    <ClInclude Include="bind.h">
+      <Filter>tasks\task_and_trait\bind</Filter>
+    </ClInclude>
+    <ClInclude Include="bind_internal.h">
+      <Filter>tasks\task_and_trait\bind</Filter>
+    </ClInclude>
+    <ClInclude Include="task_def.h">
+      <Filter>tasks\task_and_trait</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="post_task.cpp">
+      <Filter>tasks</Filter>
+    </ClCompile>
+    <ClCompile Include="platform_thread.cpp">
+      <Filter>tasks\work_thread</Filter>
+    </ClCompile>
+    <ClCompile Include="message_window.cpp">
+      <Filter>tasks\work_thread</Filter>
+    </ClCompile>
+    <ClCompile Include="worker_thread.cpp">
+      <Filter>tasks\work_thread</Filter>
+    </ClCompile>
+    <ClCompile Include="task_runner_ui.cpp">
+      <Filter>tasks\task_runner</Filter>
+    </ClCompile>
+    <ClCompile Include="task_runner_worker.cpp">
+      <Filter>tasks\task_runner</Filter>
+    </ClCompile>
+    <ClCompile Include="task_executor.cpp">
+      <Filter>tasks\task_runner_factory</Filter>
+    </ClCompile>
+    <ClCompile Include="task.cpp">
+      <Filter>tasks\task_and_trait</Filter>
+    </ClCompile>
+    <ClCompile Include="task_scheduler.cpp">
+      <Filter>tasks\task_schedule</Filter>
+    </ClCompile>
+    <ClCompile Include="task_runner.cpp">
+      <Filter>tasks\task_runner</Filter>
+    </ClCompile>
+    <ClCompile Include="task_queue.cpp">
+      <Filter>tasks\task_schedule</Filter>
+    </ClCompile>
+    <ClCompile Include="callback_internal.cpp">
+      <Filter>tasks\task_and_trait\callback</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

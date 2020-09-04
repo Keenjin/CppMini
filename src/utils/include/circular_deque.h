@@ -105,6 +105,9 @@
 // General:
 //   void swap(circular_deque&);
 
+#undef max
+#undef min
+
 namespace utils {
 
 	template <class T>
