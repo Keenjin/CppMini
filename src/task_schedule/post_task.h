@@ -10,14 +10,15 @@ namespace task_schedule {
 			result->reset(new ReturnType(std::move(func).Run()));
 		}
 
-		template <typename TaskReturnType, typename ReplyArgType>
-		void ReplyAdapter(OnceCallback<void(ReplyArgType)> callback,
+		template <typename TaskReturnType>
+		void ReplyAdapter(OnceCallback<void(TaskReturnType)> callback,
 			std::unique_ptr<TaskReturnType>* result) {
 			assert(result->get());
 			std::move(callback).Run(std::move(**result));
 		}
 	}
 
+	// 相关任务类型必须经过注册，才能使用。默认不注册，减少不必要的资源消耗
 	bool Register(TaskThreadType type);
 	void UnRegister(TaskThreadType type);
 	void UnRegisterAll();
@@ -40,19 +41,39 @@ namespace task_schedule {
 		TaskPriority task_priority = TaskPriority::NORMAL, 
 		TaskPriority reply_priority = TaskPriority::NORMAL);
 
-	template<typename TaskReturnType, typename ReplyArgType>
+	// 发一个任务，执行结果通过返回值回传给reply，即：reply的输入参数，就是前面执行任务的返回结果
+	template<typename TaskReturnType>
 	bool PostTaskAndReplyWithResult(
 		TaskThreadType type,
 		OnceCallback<TaskReturnType()> task,
-		OnceCallback<void(ReplyArgType)> reply,
+		OnceCallback<void(TaskReturnType)> reply,
 		TaskPriority priority = TaskPriority::NORMAL) {
 		auto* result = new std::unique_ptr<TaskReturnType>();
 		return PostTaskAndReply(type,
 			BindOnce(&internal::ReturnAsParamAdapter<TaskReturnType>, std::move(task), result),
-			BindOnce(&internal::ReplyAdapter<TaskReturnType, ReplyArgType>, std::move(reply), Owned(result)), 
+			BindOnce(&internal::ReplyAdapter<TaskReturnType>, std::move(reply), Owned(result)), 
 			priority);
 	}
 
-	// 当没有消息循环时，需要加上这个
+	template<typename TaskReturnType>
+	bool PostTaskAndReplyWithResult(
+		TaskThreadType task_thread_type,
+		OnceCallback<TaskReturnType()> task,
+		TaskThreadType reply_thread_type,
+		OnceCallback<void(TaskReturnType)> reply,
+		TaskPriority task_priority = TaskPriority::NORMAL,
+		TaskPriority reply_priority = TaskPriority::NORMAL) {
+		auto* result = new std::unique_ptr<TaskReturnType>();
+		return PostTaskAndReply(task_thread_type,
+			BindOnce(&internal::ReturnAsParamAdapter<TaskReturnType>, std::move(task), result),
+			reply_thread_type,
+			BindOnce(&internal::ReplyAdapter<TaskReturnType>, std::move(reply), Owned(result)),
+			task_priority, reply_priority);
+	}
+
+	// 带上下文的任务
+
+
+	// 当没有消息循环时，需要加上这个，才能正常使用UI的线程模型
 	void RunUILoopForTest();
 }
