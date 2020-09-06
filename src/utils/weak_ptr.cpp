@@ -2,31 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/memory/weak_ptr.h"
+#include "include/weak_ptr.h"
 
-namespace base {
+namespace utils {
 namespace internal {
 
 WeakReference::Flag::Flag() {
   // Flags only become bound when checked for validity, or invalidated,
   // so that we can check that later validity/invalidation operations on
   // the same Flag take place on the same sequenced thread.
-  DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
 void WeakReference::Flag::Invalidate() {
   // The flag being invalidated with a single ref implies that there are no
   // weak pointers in existence. Allow deletion on other thread in this case.
-#if DCHECK_IS_ON()
-  DCHECK(sequence_checker_.CalledOnValidSequence() || HasOneRef())
-      << "WeakPtrs must be invalidated on the same sequenced thread.";
-#endif
   invalidated_.Set();
 }
 
 bool WeakReference::Flag::IsValid() const {
   // WeakPtrs must be checked on the same sequenced thread.
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return !invalidated_.IsSet();
 }
 
@@ -35,7 +29,6 @@ bool WeakReference::Flag::MaybeValid() const {
 }
 
 void WeakReference::Flag::DetachFromSequence() {
-  DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
 WeakReference::Flag::~Flag() = default;
@@ -84,11 +77,11 @@ WeakPtrBase::~WeakPtrBase() = default;
 
 WeakPtrBase::WeakPtrBase(const WeakReference& ref, uintptr_t ptr)
     : ref_(ref), ptr_(ptr) {
-  DCHECK(ptr_);
+  assert(ptr_);
 }
 
 WeakPtrFactoryBase::WeakPtrFactoryBase(uintptr_t ptr) : ptr_(ptr) {
-  DCHECK(ptr_);
+  assert(ptr_);
 }
 
 WeakPtrFactoryBase::~WeakPtrFactoryBase() {

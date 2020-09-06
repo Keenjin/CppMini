@@ -27,13 +27,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="post_task.h">
-      <Filter>tasks</Filter>
-    </ClInclude>
     <ClInclude Include="platform_thread.h">
-      <Filter>tasks\work_thread</Filter>
-    </ClInclude>
-    <ClInclude Include="message_window.h">
       <Filter>tasks\work_thread</Filter>
     </ClInclude>
     <ClInclude Include="worker_thread.h">
@@ -48,9 +42,6 @@
     <ClInclude Include="task_executor.h">
       <Filter>tasks\task_runner_factory</Filter>
     </ClInclude>
-    <ClInclude Include="task.h">
-      <Filter>tasks\task_and_trait</Filter>
-    </ClInclude>
     <ClInclude Include="task_scheduler.h">
       <Filter>tasks\task_schedule</Filter>
     </ClInclude>
@@ -60,29 +51,38 @@
     <ClInclude Include="task_queue.h">
       <Filter>tasks\task_schedule</Filter>
     </ClInclude>
-    <ClInclude Include="callback.h">
-      <Filter>tasks\task_and_trait\callback</Filter>
-    </ClInclude>
-    <ClInclude Include="callback_forward.h">
-      <Filter>tasks\task_and_trait\callback</Filter>
-    </ClInclude>
-    <ClInclude Include="callback_internal.h">
-      <Filter>tasks\task_and_trait\callback</Filter>
-    </ClInclude>
-    <ClInclude Include="bind.h">
-      <Filter>tasks\task_and_trait\bind</Filter>
-    </ClInclude>
-    <ClInclude Include="bind_internal.h">
-      <Filter>tasks\task_and_trait\bind</Filter>
-    </ClInclude>
     <ClInclude Include="thread_pool.h">
       <Filter>tasks\work_thread</Filter>
     </ClInclude>
     <ClInclude Include="task_runner_pool.h">
       <Filter>tasks\task_runner</Filter>
     </ClInclude>
-    <ClInclude Include="task_def.h">
+    <ClInclude Include="include\post_task.h">
       <Filter>tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="include\task_def.h">
+      <Filter>tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="include\task.h">
+      <Filter>tasks\task_and_trait</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bind.h">
+      <Filter>tasks\task_and_trait\bind</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bind_internal.h">
+      <Filter>tasks\task_and_trait\bind</Filter>
+    </ClInclude>
+    <ClInclude Include="include\callback.h">
+      <Filter>tasks\task_and_trait\callback</Filter>
+    </ClInclude>
+    <ClInclude Include="include\callback_forward.h">
+      <Filter>tasks\task_and_trait\callback</Filter>
+    </ClInclude>
+    <ClInclude Include="include\callback_internal.h">
+      <Filter>tasks\task_and_trait\callback</Filter>
+    </ClInclude>
+    <ClInclude Include="message_window.h">
+      <Filter>tasks\work_thread</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -112,9 +112,6 @@
     </ClCompile>
     <ClCompile Include="task_scheduler.cpp">
       <Filter>tasks\task_schedule</Filter>
-    </ClCompile>
-    <ClCompile Include="task_runner.cpp">
-      <Filter>tasks\task_runner</Filter>
     </ClCompile>
     <ClCompile Include="task_queue.cpp">
       <Filter>tasks\task_schedule</Filter>

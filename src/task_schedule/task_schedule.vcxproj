@@ -19,16 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bind.h" />
-    <ClInclude Include="bind_internal.h" />
-    <ClInclude Include="callback.h" />
-    <ClInclude Include="callback_forward.h" />
-    <ClInclude Include="callback_internal.h" />
+    <ClInclude Include="include\bind.h" />
+    <ClInclude Include="include\bind_internal.h" />
+    <ClInclude Include="include\callback.h" />
+    <ClInclude Include="include\callback_forward.h" />
+    <ClInclude Include="include\callback_internal.h" />
+    <ClInclude Include="include\post_task.h" />
+    <ClInclude Include="include\task.h" />
+    <ClInclude Include="include\task_def.h" />
     <ClInclude Include="message_window.h" />
     <ClInclude Include="platform_thread.h" />
-    <ClInclude Include="post_task.h" />
-    <ClInclude Include="task.h" />
-    <ClInclude Include="task_def.h" />
     <ClInclude Include="task_executor.h" />
     <ClInclude Include="task_queue.h" />
     <ClInclude Include="task_runner.h" />
@@ -47,7 +47,6 @@
     <ClCompile Include="task.cpp" />
     <ClCompile Include="task_executor.cpp" />
     <ClCompile Include="task_queue.cpp" />
-    <ClCompile Include="task_runner.cpp" />
     <ClCompile Include="task_runner_pool.cpp" />
     <ClCompile Include="task_scheduler.cpp" />
     <ClCompile Include="task_runner_ui.cpp" />
