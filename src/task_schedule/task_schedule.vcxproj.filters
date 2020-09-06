@@ -75,14 +75,14 @@
     <ClInclude Include="bind_internal.h">
       <Filter>tasks\task_and_trait\bind</Filter>
     </ClInclude>
-    <ClInclude Include="task_def.h">
-      <Filter>tasks\task_and_trait</Filter>
-    </ClInclude>
     <ClInclude Include="thread_pool.h">
       <Filter>tasks\work_thread</Filter>
     </ClInclude>
     <ClInclude Include="task_runner_pool.h">
       <Filter>tasks\task_runner</Filter>
+    </ClInclude>
+    <ClInclude Include="task_def.h">
+      <Filter>tasks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
