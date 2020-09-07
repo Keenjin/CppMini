@@ -14,9 +14,14 @@ namespace task_schedule {
 		~TaskRunnerWorker();
 
 		// TaskRunner
-		virtual bool PostTask(OnceClosure task, TaskPriority priority) override;
-		virtual bool PostTaskAndReply(OnceClosure task, OnceClosure reply, TaskPriority priority) override;
+		virtual bool PostTask(OnceClosure task, TaskPriority priority = TaskPriority::NORMAL) override;
+		virtual void CleanupTasksImmediately() override;
+		virtual void StopAndWaitTasksFinish() override;
+		virtual uint32_t ThreadId() override {
+			return task_thread->ThreadId();
+		}
 
+	protected:
 		// WorkerThread::Delegate
 		virtual void OnMainEntry(WorkerThread* worker) override;
 		virtual Task GetNextTask() override;
@@ -26,7 +31,12 @@ namespace task_schedule {
 		virtual void OnMainExit(WorkerThread* worker) override;
 
 	private:
+		void WaitForLastTaskFinish();
+
 		std::unique_ptr<TaskScheduler> task_scheduler;
 		utils::scoped_refptr<WorkerThread> task_thread;
+
+		// 队列空时触发
+		utils::WaitableEvent last_task_event;
 	};
 }

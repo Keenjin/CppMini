@@ -1,6 +1,7 @@
 #include "include/post_task.h"
 #include "task_executor.h"
 #include "include/task.h"
+#include "utils/waitable_event.h"
 
 namespace task_schedule {
 
@@ -52,8 +53,32 @@ namespace task_schedule {
 		}
 	}
 
+	void CleanupTasksImmediately(TaskThreadType type) {
+		GetTaskExecutor()->GetTaskRunner(type)->CleanupTasksImmediately();
+	}
+
+	void StopAndWaitTasksFinish(TaskThreadType type) {
+		GetTaskExecutor()->GetTaskRunner(type)->StopAndWaitTasksFinish();
+	}
+
 	bool PostTask(TaskThreadType type, OnceClosure task, TaskPriority priority) {
 		return GetTaskExecutor()->GetTaskRunner(type)->PostTask(std::move(task), priority);
+	}
+
+	bool PostTaskAndWaitFinish(
+		TaskThreadType type,
+		OnceClosure task,
+		uint32_t timeout,
+		TaskPriority priority) {
+		// 如果当前线程是目标线程，直接Post任务
+		if (GetCurrentThreadId() == GetTaskExecutor()->GetTaskRunner(type)->ThreadId())	{
+			return PostTask(type, std::move(task), priority);
+		}
+		utils::WaitableEvent event;
+		PostTaskAndReply(type, std::move(task), 
+			BindOnce([](utils::WaitableEvent* e) {e->Signal();}, &event), 
+			priority);
+		return event.TimedWait(timeout);
 	}
 
 	bool PostTaskAndReply(TaskThreadType type, OnceClosure task, OnceClosure reply, TaskPriority priority) {

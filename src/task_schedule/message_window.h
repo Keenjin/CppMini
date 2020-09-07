@@ -30,6 +30,7 @@ namespace task_schedule {
 		bool Create(const std::wstring& window_name);
 		HWND GetWnd() { return window_; }
 		void Submit();
+		uint32_t ThreadId();
 
 		LRESULT OnMsgProc(
 			UINT message,
@@ -38,7 +39,7 @@ namespace task_schedule {
 			bool* handle_self);
 
 	private:
-
+		uint32_t thread_id = kThreadInvalidId;
 		HWND window_ = nullptr;
 		MessageWindow::Delegate* delegate_ = nullptr;
 

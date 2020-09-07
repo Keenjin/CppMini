@@ -23,10 +23,24 @@ namespace task_schedule {
 	void UnRegister(TaskThreadType type);
 	void UnRegisterAll();
 
+	// 结束任务，尽可能快
+	void CleanupTasksImmediately(TaskThreadType type);
+
+	// 结束任务，并等待所有任务结束
+	void StopAndWaitTasksFinish(TaskThreadType type);
+
 	// 适合一些异步任务，不需要回复
 	bool PostTask(
 		TaskThreadType type,
 		OnceClosure task, 
+		TaskPriority priority = TaskPriority::NORMAL);
+
+	// 同步任务，仅适合调用者和任务线程不在一个线程，才能同步执行，同一个线程不会同步。此接口慎用，目前仅仅简单实现解决同步调用问题
+	// 暂时不支持线程池任务 -- todo
+	bool PostTaskAndWaitFinish(
+		TaskThreadType type,
+		OnceClosure task,
+		uint32_t timeout = 3000,		// 默认等3s
 		TaskPriority priority = TaskPriority::NORMAL);
 
 	// 适合一些异步任务，回复任务执行完毕

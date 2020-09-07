@@ -20,4 +20,5 @@ namespace task_schedule {
 		HIGHEST
 	};
 
+	enum { kThreadInvalidId = 0 };
 }

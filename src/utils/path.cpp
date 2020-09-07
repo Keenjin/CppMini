@@ -59,6 +59,16 @@ namespace utils {
 		return inputEnd.compare(end) == 0;
 	}
 
+	bool EndWith(const std::string& input, const std::string& end) {
+		size_t endLen = end.length();
+		size_t inputLen = input.length();
+
+		if (inputLen < endLen) return false;
+
+		std::string inputEnd = input.substr(inputLen - endLen, endLen);
+		return inputEnd.compare(end) == 0;
+	}
+
 	bool BeginWith(const std::wstring& input, const std::wstring& begin)
 	{
 		size_t beginLen = begin.length();
@@ -67,6 +77,17 @@ namespace utils {
 		if (inputLen < beginLen) return false;
 
 		std::wstring inputBegin = input.substr(0, beginLen);
+		return inputBegin.compare(begin) == 0;
+	}
+
+	bool BeginWith(const std::string& input, const std::string& begin)
+	{
+		size_t beginLen = begin.length();
+		size_t inputLen = input.length();
+
+		if (inputLen < beginLen) return false;
+
+		std::string inputBegin = input.substr(0, beginLen);
 		return inputBegin.compare(begin) == 0;
 	}
 
@@ -82,9 +103,28 @@ namespace utils {
 		return input;
 	}
 
+	std::string& AppendBackslash(std::string& input) {
+		if (EndWith(input, "\\") || EndWith(input, "/"))
+		{
+			return input;
+		}
+
+		input.append("\\");
+
+		return input;
+	}
+
 	std::wstring FilePathJoin(const std::wstring& left, const std::wstring& right)
 	{
 		std::wstring newPath = left;
+		AppendBackslash(newPath);
+		newPath += right;
+		return newPath;
+	}
+
+	std::string FilePathJoin(const std::string& left, const std::string& right)
+	{
+		std::string newPath = left;
 		AppendBackslash(newPath);
 		newPath += right;
 		return newPath;

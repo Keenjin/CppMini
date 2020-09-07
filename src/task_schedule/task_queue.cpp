@@ -26,4 +26,9 @@ namespace task_schedule {
 		while (!task_queue.empty())
 			task_queue.pop();
 	}
+
+	uint64_t TaskQueueImpl::Count() {
+		utils::AutoLock lock(lock_queue);
+		return task_queue.size();
+	}
 }

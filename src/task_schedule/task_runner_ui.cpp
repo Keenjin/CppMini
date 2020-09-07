@@ -21,8 +21,29 @@ namespace task_schedule {
 		return true;
 	}
 
-	bool TaskRunnerUI::PostTaskAndReply(OnceClosure task, OnceClosure reply, TaskPriority priority) {
-		return true;
+	void TaskRunnerUI::CleanupTasksImmediately() {
+		task_scheduler->DisableAdd(true);
+		task_scheduler->CleanTasks();
+
+		WaitForLastTaskFinish();
+	}
+
+	void TaskRunnerUI::StopAndWaitTasksFinish() {
+		task_scheduler->DisableAdd(true);
+
+		WaitForLastTaskFinish();
+	}
+
+	void TaskRunnerUI::WaitForLastTaskFinish() {
+		// 确保当前线程，并非任务线程。如果是任务线程，则无脑清空队列，这里理论上不应该出现这种等待
+		if (msg_window->ThreadId() == GetCurrentThreadId()) {
+			task_scheduler->CleanTasks();
+			return;
+		}
+
+		last_task_event.Reset();
+		msg_window->Submit();
+		last_task_event.Wait();
 	}
 
 	void TaskRunnerUI::OnMainEntry() {
@@ -30,7 +51,10 @@ namespace task_schedule {
 	}
 
 	Task TaskRunnerUI::GetNextTask() {
-		return task_scheduler->GetNextTask();
+		Task next_task = std::move(task_scheduler->GetNextTask());
+		if (!next_task.IsValid())
+			last_task_event.Signal();
+		return std::move(next_task);
 	}
 
 	bool TaskRunnerUI::ScheduleTask(Task task) {

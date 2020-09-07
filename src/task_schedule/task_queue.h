@@ -9,6 +9,7 @@ namespace task_schedule {
 		bool Push(Task&& task);
 		Task Pop();
 		void Empty();
+		uint64_t Count();
 
 	private:
 		utils::Lock lock_queue;

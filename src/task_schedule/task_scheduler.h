@@ -12,7 +12,12 @@ namespace task_schedule {
 		virtual bool ScheduleTask(Task task) override;
 		virtual void TaskDone(Task task, bool result) override;
 
+		void DisableAdd(bool disable_add_task);
+		void CleanTasks();
+		uint64_t TasksCount();
+
 	private:
+		std::atomic_bool disable_add_task_ = false;
 		TaskQueueImpl task_queue;
 	};
 }

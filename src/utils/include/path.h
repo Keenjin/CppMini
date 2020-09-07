@@ -18,10 +18,14 @@ namespace utils {
 	std::wstring FileExtension(const std::wstring& filepath);
 
 	bool EndWith(const std::wstring& input, const std::wstring& end);
+	bool EndWith(const std::string& input, const std::string& end);
 	bool BeginWith(const std::wstring& input, const std::wstring& begin);
+	bool BeginWith(const std::string& input, const std::string& begin);
 
 	std::wstring& AppendBackslash(std::wstring& input);
+	std::string& AppendBackslash(std::string& input);
 	std::wstring FilePathJoin(const std::wstring& left, const std::wstring& right);
+	std::string FilePathJoin(const std::string& left, const std::string& right);
 
     // Function for getting a data resource of the specified |resource_type| from
     // a dll.  Some resources are optional, especially in unit tests, so this

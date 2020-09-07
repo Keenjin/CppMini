@@ -64,7 +64,6 @@ namespace task_schedule {
 			if (!task.IsValid()) {
 				if (ShouldExit())
 					break;
-
 				delegate_->WaitForWork(&wake_up_event);
 				continue;
 			}
@@ -74,5 +73,10 @@ namespace task_schedule {
 			wake_up_event.Reset();
 		}
 		delegate_->OnMainExit(this);
+	}
+
+	uint32_t WorkerThread::ThreadId() {
+		if (thread_handle.is_null()) return kThreadInvalidId;
+		return GetThreadId(thread_handle.platform_handle());
 	}
 }

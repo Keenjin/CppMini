@@ -5,88 +5,88 @@
 #include "include/weak_ptr.h"
 
 namespace utils {
-namespace internal {
+	namespace internal {
 
-WeakReference::Flag::Flag() {
-  // Flags only become bound when checked for validity, or invalidated,
-  // so that we can check that later validity/invalidation operations on
-  // the same Flag take place on the same sequenced thread.
-}
+		WeakReference::Flag::Flag() {
+			// Flags only become bound when checked for validity, or invalidated,
+			// so that we can check that later validity/invalidation operations on
+			// the same Flag take place on the same sequenced thread.
+		}
 
-void WeakReference::Flag::Invalidate() {
-  // The flag being invalidated with a single ref implies that there are no
-  // weak pointers in existence. Allow deletion on other thread in this case.
-  invalidated_.Set();
-}
+		void WeakReference::Flag::Invalidate() {
+			// The flag being invalidated with a single ref implies that there are no
+			// weak pointers in existence. Allow deletion on other thread in this case.
+			invalidated_.Set();
+		}
 
-bool WeakReference::Flag::IsValid() const {
-  // WeakPtrs must be checked on the same sequenced thread.
-  return !invalidated_.IsSet();
-}
+		bool WeakReference::Flag::IsValid() const {
+			// WeakPtrs must be checked on the same sequenced thread.
+			return !invalidated_.IsSet();
+		}
 
-bool WeakReference::Flag::MaybeValid() const {
-  return !invalidated_.IsSet();
-}
+		bool WeakReference::Flag::MaybeValid() const {
+			return !invalidated_.IsSet();
+		}
 
-void WeakReference::Flag::DetachFromSequence() {
-}
+		void WeakReference::Flag::DetachFromSequence() {
+		}
 
-WeakReference::Flag::~Flag() = default;
+		WeakReference::Flag::~Flag() = default;
 
-WeakReference::WeakReference() = default;
+		WeakReference::WeakReference() = default;
 
-WeakReference::WeakReference(const scoped_refptr<Flag>& flag) : flag_(flag) {}
+		WeakReference::WeakReference(const scoped_refptr<Flag>& flag) : flag_(flag) {}
 
-WeakReference::~WeakReference() = default;
+		WeakReference::~WeakReference() = default;
 
-WeakReference::WeakReference(WeakReference&& other) noexcept = default;
+		WeakReference::WeakReference(WeakReference&& other) noexcept = default;
 
-WeakReference::WeakReference(const WeakReference& other) = default;
+		WeakReference::WeakReference(const WeakReference& other) = default;
 
-bool WeakReference::IsValid() const {
-  return flag_ && flag_->IsValid();
-}
+		bool WeakReference::IsValid() const {
+			return flag_ && flag_->IsValid();
+		}
 
-bool WeakReference::MaybeValid() const {
-  return flag_ && flag_->MaybeValid();
-}
+		bool WeakReference::MaybeValid() const {
+			return flag_ && flag_->MaybeValid();
+		}
 
-WeakReferenceOwner::WeakReferenceOwner()
-    : flag_(MakeRefCounted<WeakReference::Flag>()) {}
+		WeakReferenceOwner::WeakReferenceOwner()
+			: flag_(MakeRefCounted<WeakReference::Flag>()) {}
 
-WeakReferenceOwner::~WeakReferenceOwner() {
-  flag_->Invalidate();
-}
+		WeakReferenceOwner::~WeakReferenceOwner() {
+			flag_->Invalidate();
+		}
 
-WeakReference WeakReferenceOwner::GetRef() const {
-  // If we hold the last reference to the Flag then detach the SequenceChecker.
-  if (!HasRefs())
-    flag_->DetachFromSequence();
+		WeakReference WeakReferenceOwner::GetRef() const {
+			// If we hold the last reference to the Flag then detach the SequenceChecker.
+			if (!HasRefs())
+				flag_->DetachFromSequence();
 
-  return WeakReference(flag_);
-}
+			return WeakReference(flag_);
+		}
 
-void WeakReferenceOwner::Invalidate() {
-  flag_->Invalidate();
-  flag_ = MakeRefCounted<WeakReference::Flag>();
-}
+		void WeakReferenceOwner::Invalidate() {
+			flag_->Invalidate();
+			flag_ = MakeRefCounted<WeakReference::Flag>();
+		}
 
-WeakPtrBase::WeakPtrBase() : ptr_(0) {}
+		WeakPtrBase::WeakPtrBase() : ptr_(0) {}
 
-WeakPtrBase::~WeakPtrBase() = default;
+		WeakPtrBase::~WeakPtrBase() = default;
 
-WeakPtrBase::WeakPtrBase(const WeakReference& ref, uintptr_t ptr)
-    : ref_(ref), ptr_(ptr) {
-  assert(ptr_);
-}
+		WeakPtrBase::WeakPtrBase(const WeakReference& ref, uintptr_t ptr)
+			: ref_(ref), ptr_(ptr) {
+			assert(ptr_);
+		}
 
-WeakPtrFactoryBase::WeakPtrFactoryBase(uintptr_t ptr) : ptr_(ptr) {
-  assert(ptr_);
-}
+		WeakPtrFactoryBase::WeakPtrFactoryBase(uintptr_t ptr) : ptr_(ptr) {
+			assert(ptr_);
+		}
 
-WeakPtrFactoryBase::~WeakPtrFactoryBase() {
-  ptr_ = 0;
-}
+		WeakPtrFactoryBase::~WeakPtrFactoryBase() {
+			ptr_ = 0;
+		}
 
-}  // namespace internal
+	}  // namespace internal
 }  // namespace base

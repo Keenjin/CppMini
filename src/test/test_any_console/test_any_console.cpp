@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <initializer_list>
+#include <memory>
+#include <any>
 
 class Test
 {
@@ -41,13 +43,38 @@ public:
 	}
 };
 
+class A {
+public:
+	virtual ~A() = default;
+	virtual void Print() {
+		std::cout << "A" << std::endl;
+	}
+};
+
+class B : public A {
+public:
+	virtual void Print() {
+		std::cout << "B" << std::endl;
+	}
+};
+
 int main()
 {
     std::cout << "Hello World!\n";
 
+	std::shared_ptr<A> obj_a = std::make_shared<B>();
+	obj_a->Print();
+
+	std::shared_ptr<B> obj_b = std::dynamic_pointer_cast<B>(obj_a);
+	obj_b->Print();
+
 	std::initializer_list<int> a = { 1,2,3 };
+	std::initializer_list<int> b = a;
 	Test b = { 1, 2 };
 	Test1 c = { 1,2,3 };
+
+	std::any any_obj = 1.0f;
+	int aaa = 2;
 
 	system("pause");
 }

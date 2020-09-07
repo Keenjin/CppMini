@@ -30,6 +30,7 @@ namespace task_schedule {
 		bool Start();
 		void Submit();
 		void Cleanup();
+		uint32_t ThreadId();
 
 	private:
 		friend class utils::RefCountedThreadSafe<WorkerThread>;

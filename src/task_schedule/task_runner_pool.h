@@ -13,8 +13,9 @@ namespace task_schedule {
 		~TaskRunnerPool();
 
 		// TaskRunner
-		virtual bool PostTask(OnceClosure task, TaskPriority priority) override;
-		virtual bool PostTaskAndReply(OnceClosure task, OnceClosure reply, TaskPriority priority) override;
+		virtual bool PostTask(OnceClosure task, TaskPriority priority = TaskPriority::NORMAL) override;
+		virtual void CleanupTasksImmediately() override;
+		virtual void StopAndWaitTasksFinish() override;
 
 		// MessageWindow::Delegate
 		virtual void OnMainEntry() override;

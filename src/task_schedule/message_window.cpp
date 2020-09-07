@@ -105,6 +105,8 @@ namespace task_schedule {
 		if (window_ != nullptr)
 			return false;
 
+		thread_id = GetCurrentThreadId();
+
 		window_ =
 			::CreateWindow(MAKEINTATOM(window_class.atom()), window_name.c_str(), 0, 0, 0, 0, 0,
 				HWND_MESSAGE, nullptr, window_class.instance(), this);
@@ -113,6 +115,10 @@ namespace task_schedule {
 		}
 
 		return true;
+	}
+
+	uint32_t MessageWindow::ThreadId() {
+		return thread_id;
 	}
 
 	LRESULT MessageWindow::OnMsgProc(

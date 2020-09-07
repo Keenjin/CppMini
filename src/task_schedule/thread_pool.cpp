@@ -64,6 +64,9 @@ namespace task_schedule {
 
 	void ThreadPool::ThreadMain() {
 		Task task = delegate_->GetNextTask();
-		delegate_->TaskDone(task, delegate_->ScheduleTask(task));
+		if (task.IsValid())
+		{
+			delegate_->TaskDone(task, delegate_->ScheduleTask(task));
+		}
 	}
 }
