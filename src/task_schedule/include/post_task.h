@@ -29,6 +29,9 @@ namespace task_schedule {
 	// 结束任务，并等待所有任务结束
 	void StopAndWaitTasksFinish(TaskThreadType type);
 
+	// 判断当前线程是哪个线程
+	TaskThreadType GetCurrentThreadType();
+
 	// 适合一些异步任务，不需要回复
 	bool PostTask(
 		TaskThreadType type,

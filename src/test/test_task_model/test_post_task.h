@@ -1,13 +1,13 @@
 #pragma once
 
-#include "post_task.h"
+#include "task_schedule/post_task.h"
 #include "utils/lock.h"
 
 #include <iostream>
 
 utils::Lock g_lock;
 
-void Test1(int a) {
+void Test1(int a, int b, int c) {
 	utils::AutoLock lock(g_lock);
 	std::cout << "ThreadId: " << GetCurrentThreadId() << "\tTest1: " << a << std::endl;
 }
@@ -43,8 +43,8 @@ void test_post_task() {
 // 	task_schedule::PostTask(task_schedule::TaskThreadType::Pool, task_schedule::BindOnce(Test1, 10));
 // 	task_schedule::PostTask(task_schedule::TaskThreadType::Pool, task_schedule::BindOnce(Test1, 11));
 
-	task_schedule::PostTaskAndReply(task_schedule::TaskThreadType::UI, task_schedule::BindOnce(&CTest::Test2, a, 55555), task_schedule::TaskThreadType::Background, task_schedule::BindOnce(Test1, 55555));
-	task_schedule::PostTaskAndReplyWithResult(task_schedule::TaskThreadType::UI, task_schedule::BindOnce(&CTest::Test3, a, 1, 2), task_schedule::BindOnce(Test1));
+	task_schedule::PostTaskAndReply(task_schedule::TaskThreadType::UI, task_schedule::BindOnce(&CTest::Test2, a, 55555), task_schedule::TaskThreadType::Background, task_schedule::BindOnce(Test1, 55555, 444, 444));
+	task_schedule::PostTaskAndReplyWithResult(task_schedule::TaskThreadType::UI, task_schedule::BindOnce(&CTest::Test3, a, 1, 2), task_schedule::BindOnce(Test1, 0, 111));
 
 	task_schedule::RunUILoopForTest();
 

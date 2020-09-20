@@ -43,6 +43,9 @@
     <Filter Include="sync">
       <UniqueIdentifier>{af13ce94-321a-4710-a448-1ad7fbb48382}</UniqueIdentifier>
     </Filter>
+    <Filter Include="singleton">
+      <UniqueIdentifier>{859e5d20-a5ae-4391-9170-7a952dc9c963}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\hook.h">
@@ -143,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="include\small_map.h">
       <Filter>container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\singleton.h">
+      <Filter>singleton</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

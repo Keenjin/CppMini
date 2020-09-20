@@ -61,6 +61,17 @@ namespace task_schedule {
 		GetTaskExecutor()->GetTaskRunner(type)->StopAndWaitTasksFinish();
 	}
 
+	TaskThreadType GetCurrentThreadType() {
+		for (auto type = 0; type < (int)TaskThreadType::Max; type++) {
+			if (GetTaskExecutor() && 
+				GetTaskExecutor()->GetTaskRunner((TaskThreadType)type) && 
+				GetCurrentThreadId() == GetTaskExecutor()->GetTaskRunner((TaskThreadType)type)->ThreadId()) {
+				return (TaskThreadType)type;
+			}
+		}
+		return TaskThreadType::Invalid;
+	}
+
 	bool PostTask(TaskThreadType type, OnceClosure task, TaskPriority priority) {
 		return GetTaskExecutor()->GetTaskRunner(type)->PostTask(std::move(task), priority);
 	}

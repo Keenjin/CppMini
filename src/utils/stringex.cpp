@@ -151,6 +151,13 @@ namespace utils {
 		return wide;
 	}
 
+	std::string MakeSureUtf8(const std::string& value) {
+		if (IsUtf8(value))
+			return value;
+
+		return WideToUtf8(NativeMBToWide(value));
+	}
+
 	std::string WideToUtf8(const std::wstring& value)
 	{
 		return SysWideToMultiByte(value, CP_UTF8);

@@ -328,6 +328,7 @@
     <ClInclude Include="include\registry.h" />
     <ClInclude Include="include\scoped_com_initializer.h" />
     <ClInclude Include="include\scoped_refptr.h" />
+    <ClInclude Include="include\singleton.h" />
     <ClInclude Include="include\small_map.h" />
     <ClInclude Include="include\span.h" />
     <ClInclude Include="include\stl_util.h" />

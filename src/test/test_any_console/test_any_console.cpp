@@ -5,6 +5,8 @@
 #include <initializer_list>
 #include <memory>
 #include <any>
+#include <set>
+#include <functional>
 
 class Test
 {
@@ -58,6 +60,22 @@ public:
 	}
 };
 
+void FTest1() {
+	int a = 3;
+	a += 4;
+	int b = a + 4;
+}
+
+void FTest2() {
+	int a = 3;
+	a += 4;
+	int b = a + 4;
+}
+
+void FuncTest(int a, int b, void* context) {
+
+}
+
 int main()
 {
     std::cout << "Hello World!\n";
@@ -69,12 +87,29 @@ int main()
 	obj_b->Print();
 
 	std::initializer_list<int> a = { 1,2,3 };
-	std::initializer_list<int> b = a;
+	//std::initializer_list<int> b = a;
 	Test b = { 1, 2 };
 	Test1 c = { 1,2,3 };
 
 	std::any any_obj = 1.0f;
-	int aaa = 2;
+
+	//std::set<int, int> mysets;
+	//mysets.insert(1, 2);
+	//mysets.insert(1, 3);
+	//mysets.insert(1, 2);
+
+	A test_a;
+	std::function<void()> fa = std::bind(&A::Print, test_a);
+	std::function<void()> fb = FTest2;
+	auto fa_t = fa.target_type().name();
+	auto fb_t = fb.target_type().name();
+
+	std::string aaa = "111";
+	std::string bbb = "111";
+	if (aaa == bbb)
+		std::cout << "aaa == bbb" << std::endl;
+
+
 
 	system("pause");
 }

@@ -9,6 +9,7 @@ namespace utils {
 	bool IsAscii(const std::string& value);
 	bool IsAscii(const std::wstring& value);
 
+	std::string MakeSureUtf8(const std::string& value);
 	std::string WideToUtf8(const std::wstring& value);
 	std::wstring Utf8ToWide(const std::string& value);
 	std::string WideToNativeMB(const std::wstring& value);

@@ -5,6 +5,8 @@
 #include "macros.h"
 #include <windows.h>
 
+#pragma comment(lib, "version.lib")
+
 struct tagVS_FIXEDFILEINFO;
 typedef tagVS_FIXEDFILEINFO VS_FIXEDFILEINFO;
 

@@ -16,6 +16,7 @@ namespace task_schedule {
 					return true;
 				}
 				assert(false);
+				return false;
 			}
 
 		}  // namespace
