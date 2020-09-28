@@ -78,6 +78,11 @@ void FuncTest(int a, int b, void* context) {
 
 int main()
 {
+	{
+		std::unique_ptr<char[]> testMemLeak(new char[100]);
+	}
+
+	
     std::cout << "Hello World!\n";
 
 	std::shared_ptr<A> obj_a = std::make_shared<B>();

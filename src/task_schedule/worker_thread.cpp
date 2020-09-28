@@ -38,6 +38,7 @@ namespace task_schedule {
 	void WorkerThread::Cleanup() {
 		should_exit.Set();
 		wake_up_event.Signal();
+		PlatformThread::Join(thread_handle);
 	}
 
 	bool WorkerThread::ShouldExit() const {
@@ -48,7 +49,8 @@ namespace task_schedule {
 		utils::AutoLock auto_lock(thread_lock);
 
 		if (!thread_handle.is_null()) {
-			PlatformThread::Detach(thread_handle);
+			ShouldExit();
+			PlatformThread::Join(thread_handle);
 		}
 	}
 
