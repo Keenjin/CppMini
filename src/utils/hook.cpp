@@ -1,4 +1,4 @@
-#include "include\hook.h"
+ï»¿#include "include\hook.h"
 #include "include\proc.h"
 #include "include\path.h"
 #include "include\stringex.h"
@@ -19,7 +19,7 @@ namespace utils {
 		return StartProcess(injectExe, Format(L"\"%s\" \"%s\" %lu %lu", injectExe.c_str(), hookDll.c_str(), idIsTid ? 1 : 0, id));
 	}
 
-	// Èç¹ûÖ»ÊÇhangµ±Ç°Ïß³Ì£¬²»ĞèÒª·µ»Ø¾ä±ú£¬·ñÔò£¬ĞèÒª·µ»Ø
+	// å¦‚æœåªæ˜¯hangå½“å‰çº¿ç¨‹ï¼Œä¸éœ€è¦è¿”å›å¥æŸ„ï¼Œå¦åˆ™ï¼Œéœ€è¦è¿”å›
 	bool DetourUpdateThreads(bool hangAllThread, std::vector<WinHandle>& closeDeffer)
 	{
 		if (!hangAllThread)
@@ -53,7 +53,7 @@ namespace utils {
 			BOOL ret = Thread32First(hSnap, &te);
 			while (ret)
 			{
-				// ±éÀúÏß³Ì£¬ÒÀ´ÎÖ´ĞĞ
+				// éå†çº¿ç¨‹ï¼Œä¾æ¬¡æ‰§è¡Œ
 				auto iter = tids.find(te.th32ThreadID);
 				if (te.th32OwnerProcessID == dwPID &&
 					te.th32ThreadID == dwTID &&
@@ -142,7 +142,7 @@ namespace utils {
 		return ret;
 	}
 
-	// Í¨¹ıÄ£ºıÆ¥Åä´úÂëËÑË÷Hook£¬±È½Ï¸´ÔÓ£¬ºóÃæÊµÏÖ
+	// é€šè¿‡æ¨¡ç³ŠåŒ¹é…ä»£ç æœç´¢Hookï¼Œæ¯”è¾ƒå¤æ‚ï¼Œåé¢å®ç°
 	bool HookFuncByCode(HMODULE hModule, const byte* codeBuffer, size_t codeBufferLen, void* newFuncAddr, void* oldFuncAddr, bool handAllThreads)
 	{
 		if (newFuncAddr == nullptr) return false;

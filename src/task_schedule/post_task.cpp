@@ -1,4 +1,4 @@
-#include "include/post_task.h"
+ï»¿#include "include/post_task.h"
 #include "task_executor.h"
 #include "include/task.h"
 #include "utils/waitable_event.h"
@@ -53,8 +53,8 @@ namespace task_schedule {
 		}
 	}
 
-	void CleanupTasksImmediately(TaskThreadType type) {
-		GetTaskExecutor()->GetTaskRunner(type)->CleanupTasksImmediately();
+	void CleanupTasksImmediately(TaskThreadType type, bool disableForever) {
+		GetTaskExecutor()->GetTaskRunner(type)->CleanupTasksImmediately(disableForever);
 	}
 
 	void StopAndWaitTasksFinish(TaskThreadType type) {
@@ -73,7 +73,10 @@ namespace task_schedule {
 	}
 
 	bool PostTask(TaskThreadType type, OnceClosure task, TaskPriority priority) {
-		return GetTaskExecutor()->GetTaskRunner(type)->PostTask(std::move(task), priority);
+		if (GetTaskExecutor() && GetTaskExecutor()->GetTaskRunner(type)) {
+			return GetTaskExecutor()->GetTaskRunner(type)->PostTask(std::move(task), priority);
+		}
+		return false;
 	}
 
 	bool PostTaskAndWaitFinish(
@@ -81,7 +84,7 @@ namespace task_schedule {
 		OnceClosure task,
 		uint32_t timeout,
 		TaskPriority priority) {
-		// Èç¹ûµ±Ç°Ïß³ÌÊÇÄ¿±êÏß³Ì£¬Ö±½ÓPostÈÎÎñ
+		// å¦‚æžœå½“å‰çº¿ç¨‹æ˜¯ç›®æ ‡çº¿ç¨‹ï¼Œç›´æŽ¥Postä»»åŠ¡
 		if (GetCurrentThreadId() == GetTaskExecutor()->GetTaskRunner(type)->ThreadId())	{
 			return PostTask(type, std::move(task), priority);
 		}

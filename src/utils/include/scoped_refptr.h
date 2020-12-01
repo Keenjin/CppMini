@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <assert.h>
 #include <iostream>
 
@@ -50,7 +50,7 @@ namespace utils {
 			"Use AdoptRef only if the reference count starts from one.");
 
 		assert(obj);
-		assert(obj->HasOneRef());
+		//assert(obj->HasOneRef());
 		//obj->Adopted();
 		return scoped_refptr<T>(obj, internal::kAdoptRefTag);
 	}

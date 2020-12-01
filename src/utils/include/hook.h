@@ -1,16 +1,16 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <Windows.h>
 
 namespace utils {
-	// idIsTid±íÊ¾×¢ÈëÏß³Ì¡£
+	// idIsTidè¡¨ç¤ºæ³¨å…¥çº¿ç¨‹ã€‚
 	bool InjectTarget(const std::wstring& injectExe, const std::wstring& hookDll, uint32_t id, bool idIsTid = true);
 
-	// Í¨¹ıÃû×ÖHook
+	// é€šè¿‡åå­—Hook
 	bool HookFuncByName(HMODULE hModule, const std::string& funcName, void* newFuncAddr, void* oldFuncAddr = nullptr, bool handAllThreads = true);
 
-	// Í¨¹ıÄ£ºıÆ¥Åä´úÂëËÑË÷Hook£¬±È½Ï¸´ÔÓ£¬ºóÃæÊµÏÖ
+	// é€šè¿‡æ¨¡ç³ŠåŒ¹é…ä»£ç æœç´¢Hookï¼Œæ¯”è¾ƒå¤æ‚ï¼Œåé¢å®ç°
 	bool HookFuncByCode(HMODULE hModule, const byte* codeBuffer, size_t codeBufferLen, void* newFuncAddr, void* oldFuncAddr, bool handAllThreads = true);
 
 	bool UnHookFunc(void* newFuncAddr, void* oldFuncAddr);

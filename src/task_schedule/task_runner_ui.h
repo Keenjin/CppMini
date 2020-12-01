@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "task_runner.h"
 #include "message_window.h"
 #include "task_scheduler.h"
@@ -16,7 +16,7 @@ namespace task_schedule {
 
 		// TaskRunner
 		virtual bool PostTask(OnceClosure task, TaskPriority priority = TaskPriority::NORMAL) override;
-		virtual void CleanupTasksImmediately() override;
+		virtual void CleanupTasksImmediately(bool disableForever = true) override;
 		virtual void StopAndWaitTasksFinish() override;
 		virtual uint32_t ThreadId() override {
 			return msg_window->ThreadId();

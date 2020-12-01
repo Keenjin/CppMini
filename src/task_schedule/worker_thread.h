@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "utils/ref_counted.h"
 #include "platform_thread.h"
 #include "utils/lock.h"
@@ -35,7 +35,7 @@ namespace task_schedule {
 	private:
 		friend class utils::RefCountedThreadSafe<WorkerThread>;
 
-		~WorkerThread() override;
+		virtual ~WorkerThread() override;
 
 		bool ShouldExit() const;
 
@@ -44,7 +44,7 @@ namespace task_schedule {
 
 		void RunWorker();
 
-		std::unique_ptr<WorkerThread::Delegate> delegate_;
+		WorkerThread::Delegate* delegate_ = nullptr;
 
 		mutable utils::Lock thread_lock;
 		PlatformThreadHandle thread_handle;

@@ -1,15 +1,15 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <tuple>
 
 namespace utils {
 
-	// ´ò¿ª½ø³Ì
+	// æ‰“å¼€è¿›ç¨‹
 	bool StartProcess(const std::wstring& exePath, const std::wstring& commandline, bool wait = false);
 	bool StartProcess(const std::string& exePath, const std::string& commandline, bool wait = false);
 
-	// ÅĞ¶ÏÄ¿±ê½ø³Ì£¬·µ»ØÖµfirst±íÊ¾ÊÇ·ñ64£¬second±íÊ¾ÊÇ·ñ´æÔÚÒì³£
+	// åˆ¤æ–­ç›®æ ‡è¿›ç¨‹ï¼Œè¿”å›å€¼firstè¡¨ç¤ºæ˜¯å¦64ï¼Œsecondè¡¨ç¤ºæ˜¯å¦å­˜åœ¨å¼‚å¸¸
 	std::tuple<bool, bool> IsProcess64Bit(uint32_t processId);
 
 	std::wstring GetProcessPath();

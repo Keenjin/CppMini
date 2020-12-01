@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "task_def.h"
 #include "bind.h"
 
@@ -18,35 +18,35 @@ namespace task_schedule {
 		}
 	}
 
-	// Ïà¹ØÈÎÎñÀàĞÍ±ØĞë¾­¹ı×¢²á£¬²ÅÄÜÊ¹ÓÃ¡£Ä¬ÈÏ²»×¢²á£¬¼õÉÙ²»±ØÒªµÄ×ÊÔ´ÏûºÄ
+	// ç›¸å…³ä»»åŠ¡ç±»å‹å¿…é¡»ç»è¿‡æ³¨å†Œï¼Œæ‰èƒ½ä½¿ç”¨ã€‚é»˜è®¤ä¸æ³¨å†Œï¼Œå‡å°‘ä¸å¿…è¦çš„èµ„æºæ¶ˆè€—
 	bool Register(TaskThreadType type);
 	void UnRegister(TaskThreadType type);
 	void UnRegisterAll();
 
-	// ½áÊøÈÎÎñ£¬¾¡¿ÉÄÜ¿ì
-	void CleanupTasksImmediately(TaskThreadType type);
+	// ç»“æŸä»»åŠ¡ï¼Œå°½å¯èƒ½å¿«
+	void CleanupTasksImmediately(TaskThreadType type, bool disableForever = true);
 
-	// ½áÊøÈÎÎñ£¬²¢µÈ´ıËùÓĞÈÎÎñ½áÊø
+	// ç»“æŸä»»åŠ¡ï¼Œå¹¶ç­‰å¾…æ‰€æœ‰ä»»åŠ¡ç»“æŸ
 	void StopAndWaitTasksFinish(TaskThreadType type);
 
-	// ÅĞ¶Ïµ±Ç°Ïß³ÌÊÇÄÄ¸öÏß³Ì
+	// åˆ¤æ–­å½“å‰çº¿ç¨‹æ˜¯å“ªä¸ªçº¿ç¨‹
 	TaskThreadType GetCurrentThreadType();
 
-	// ÊÊºÏÒ»Ğ©Òì²½ÈÎÎñ£¬²»ĞèÒª»Ø¸´
+	// é€‚åˆä¸€äº›å¼‚æ­¥ä»»åŠ¡ï¼Œä¸éœ€è¦å›å¤
 	bool PostTask(
 		TaskThreadType type,
 		OnceClosure task, 
 		TaskPriority priority = TaskPriority::NORMAL);
 
-	// Í¬²½ÈÎÎñ£¬½öÊÊºÏµ÷ÓÃÕßºÍÈÎÎñÏß³Ì²»ÔÚÒ»¸öÏß³Ì£¬²ÅÄÜÍ¬²½Ö´ĞĞ£¬Í¬Ò»¸öÏß³Ì²»»áÍ¬²½¡£´Ë½Ó¿ÚÉ÷ÓÃ£¬Ä¿Ç°½ö½ö¼òµ¥ÊµÏÖ½â¾öÍ¬²½µ÷ÓÃÎÊÌâ
-	// ÔİÊ±²»Ö§³ÖÏß³Ì³ØÈÎÎñ -- todo
+	// åŒæ­¥ä»»åŠ¡ï¼Œä»…é€‚åˆè°ƒç”¨è€…å’Œä»»åŠ¡çº¿ç¨‹ä¸åœ¨ä¸€ä¸ªçº¿ç¨‹ï¼Œæ‰èƒ½åŒæ­¥æ‰§è¡Œï¼ŒåŒä¸€ä¸ªçº¿ç¨‹ä¸ä¼šåŒæ­¥ã€‚æ­¤æ¥å£æ…ç”¨ï¼Œç›®å‰ä»…ä»…ç®€å•å®ç°è§£å†³åŒæ­¥è°ƒç”¨é—®é¢˜
+	// æš‚æ—¶ä¸æ”¯æŒçº¿ç¨‹æ± ä»»åŠ¡ -- todo
 	bool PostTaskAndWaitFinish(
 		TaskThreadType type,
 		OnceClosure task,
-		uint32_t timeout = 3000,		// Ä¬ÈÏµÈ3s
+		uint32_t timeout = 3000,		// é»˜è®¤ç­‰3s
 		TaskPriority priority = TaskPriority::NORMAL);
 
-	// ÊÊºÏÒ»Ğ©Òì²½ÈÎÎñ£¬»Ø¸´ÈÎÎñÖ´ĞĞÍê±Ï
+	// é€‚åˆä¸€äº›å¼‚æ­¥ä»»åŠ¡ï¼Œå›å¤ä»»åŠ¡æ‰§è¡Œå®Œæ¯•
 	bool PostTaskAndReply(
 		TaskThreadType type, 
 		OnceClosure task, 
@@ -58,7 +58,7 @@ namespace task_schedule {
 		TaskPriority task_priority = TaskPriority::NORMAL, 
 		TaskPriority reply_priority = TaskPriority::NORMAL);
 
-	// ·¢Ò»¸öÈÎÎñ£¬Ö´ĞĞ½á¹ûÍ¨¹ı·µ»ØÖµ»Ø´«¸øreply£¬¼´£ºreplyµÄÊäÈë²ÎÊı£¬¾ÍÊÇÇ°ÃæÖ´ĞĞÈÎÎñµÄ·µ»Ø½á¹û
+	// å‘ä¸€ä¸ªä»»åŠ¡ï¼Œæ‰§è¡Œç»“æœé€šè¿‡è¿”å›å€¼å›ä¼ ç»™replyï¼Œå³ï¼šreplyçš„è¾“å…¥å‚æ•°ï¼Œå°±æ˜¯å‰é¢æ‰§è¡Œä»»åŠ¡çš„è¿”å›ç»“æœ
 	template<typename TaskReturnType>
 	bool PostTaskAndReplyWithResult(
 		TaskThreadType type,
@@ -88,9 +88,9 @@ namespace task_schedule {
 			task_priority, reply_priority);
 	}
 
-	// ´øÉÏÏÂÎÄµÄÈÎÎñ
+	// å¸¦ä¸Šä¸‹æ–‡çš„ä»»åŠ¡
 
 
-	// µ±Ã»ÓĞÏûÏ¢Ñ­»·Ê±£¬ĞèÒª¼ÓÉÏÕâ¸ö£¬²ÅÄÜÕı³£Ê¹ÓÃUIµÄÏß³ÌÄ£ĞÍ
+	// å½“æ²¡æœ‰æ¶ˆæ¯å¾ªç¯æ—¶ï¼Œéœ€è¦åŠ ä¸Šè¿™ä¸ªï¼Œæ‰èƒ½æ­£å¸¸ä½¿ç”¨UIçš„çº¿ç¨‹æ¨¡å‹
 	void RunUILoopForTest();
 }

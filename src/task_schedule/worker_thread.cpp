@@ -1,4 +1,4 @@
-#include "worker_thread.h"
+﻿#include "worker_thread.h"
 
 namespace task_schedule {
 
@@ -39,6 +39,7 @@ namespace task_schedule {
 		should_exit.Set();
 		wake_up_event.Signal();
 		PlatformThread::Join(thread_handle);
+		thread_handle.~PlatformThreadHandle();
 	}
 
 	bool WorkerThread::ShouldExit() const {

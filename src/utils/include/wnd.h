@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <windows.h>
 #include <stdint.h>
 #include <string>
@@ -33,19 +33,19 @@ namespace utils {
 
 	}WndMatchInfo, *PWndMatchInfo;
 
-	// ÑÏ¸ñÆ¥Åä£¬²éÑ¯µÚÒ»¸öÃüÖĞ
+	// ä¸¥æ ¼åŒ¹é…ï¼ŒæŸ¥è¯¢ç¬¬ä¸€ä¸ªå‘½ä¸­
 	HWND FindWndFirst(const WndMatchInfo& matchWnd);
 
-	// ÕÒ×îÏàËÆµÄÄÇ¸ö
-	// Ä¿Ç°´ò·ÖËã·¨È¨ÖØ£º£¨´ıµ÷Õû£©
-	//		mustTop£º44·Ö
-	//		mustVisible£º44·Ö
-	//		processName£º13·Ö
-	//		title£º10·Ö
-	//		className£º9·Ö
-	//		width£º1·Ö
-	//		height£º1·Ö
-	//		style£º1·Ö
-	//		exStyle£º1·Ö
+	// æ‰¾æœ€ç›¸ä¼¼çš„é‚£ä¸ª
+	// ç›®å‰æ‰“åˆ†ç®—æ³•æƒé‡ï¼šï¼ˆå¾…è°ƒæ•´ï¼‰
+	//		mustTopï¼š44åˆ†
+	//		mustVisibleï¼š44åˆ†
+	//		processNameï¼š13åˆ†
+	//		titleï¼š10åˆ†
+	//		classNameï¼š9åˆ†
+	//		widthï¼š1åˆ†
+	//		heightï¼š1åˆ†
+	//		styleï¼š1åˆ†
+	//		exStyleï¼š1åˆ†
 	HWND FindWndFuzzyNearest(const WndMatchInfo& matchWnd);
 }

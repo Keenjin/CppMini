@@ -1,4 +1,4 @@
-#include "task_runner_worker.h"
+ï»¿#include "task_runner_worker.h"
 
 namespace task_schedule {
 
@@ -17,23 +17,25 @@ namespace task_schedule {
 		return true;
 	}
 
-	void TaskRunnerWorker::CleanupTasksImmediately() {
+	void TaskRunnerWorker::CleanupTasksImmediately(bool disableForever) {
 		task_scheduler->DisableAdd(true);
 		task_scheduler->CleanTasks();
 
-		// µÈ´ı×îºóÒ»¸öÈÎÎñÍê³É
+		// ç­‰å¾…æœ€åä¸€ä¸ªä»»åŠ¡å®Œæˆ
 		WaitForLastTaskFinish();
+
+		if (!disableForever) task_scheduler->DisableAdd(false);
 	}
 
 	void TaskRunnerWorker::StopAndWaitTasksFinish() {
 		task_scheduler->DisableAdd(true);
 
-		// µÈ´ı×îºóÒ»¸öÈÎÎñÍê³É
+		// ç­‰å¾…æœ€åä¸€ä¸ªä»»åŠ¡å®Œæˆ
 		WaitForLastTaskFinish();
 	}
 
 	void TaskRunnerWorker::WaitForLastTaskFinish() {
-		// È·±£µ±Ç°Ïß³Ì£¬²¢·ÇÈÎÎñÏß³Ì¡£Èç¹ûÊÇÈÎÎñÏß³Ì£¬ËµÃ÷Ç°ÃæÓ¦¸ÃÒÑ¾­Çå¿ÕÈÎÎñÁË£¬²ÅÓĞ»ú»áÖ´ĞĞÕâÀï
+		// ç¡®ä¿å½“å‰çº¿ç¨‹ï¼Œå¹¶éä»»åŠ¡çº¿ç¨‹ã€‚å¦‚æœæ˜¯ä»»åŠ¡çº¿ç¨‹ï¼Œè¯´æ˜å‰é¢åº”è¯¥å·²ç»æ¸…ç©ºä»»åŠ¡äº†ï¼Œæ‰æœ‰æœºä¼šæ‰§è¡Œè¿™é‡Œ
 		if (task_thread->ThreadId() == GetCurrentThreadId()) {
 			task_scheduler->CleanTasks();
 			return;

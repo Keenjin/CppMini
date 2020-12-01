@@ -1,4 +1,4 @@
-#include "include\path.h"
+﻿#include "include\path.h"
 #include <assert.h>
 
 namespace utils {
@@ -183,7 +183,7 @@ namespace utils {
 		LanguageAndCodePage* GetTranslate(const void* data) {
 			static constexpr wchar_t kTranslation[] = L"\\VarFileInfo\\Translation";
 			LPVOID translate = nullptr;
-			UINT dummy_size;
+			UINT dummy_size = 0;
 			if (::VerQueryValue(data, kTranslation, &translate, &dummy_size))
 				return static_cast<LanguageAndCodePage*>(translate);
 			return nullptr;
@@ -192,7 +192,7 @@ namespace utils {
 		const VS_FIXEDFILEINFO& GetVsFixedFileInfo(const void* data) {
 			static constexpr wchar_t kRoot[] = L"\\";
 			LPVOID fixed_file_info = nullptr;
-			UINT dummy_size;
+			UINT dummy_size = 0;
 			assert(::VerQueryValue(data, kRoot, &fixed_file_info, &dummy_size));
 			return *static_cast<VS_FIXEDFILEINFO*>(fixed_file_info);
 		}

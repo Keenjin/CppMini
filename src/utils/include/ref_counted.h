@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "macros.h"
 #include "scoped_refptr.h"
@@ -267,7 +267,7 @@ namespace utils {
 		}
 
 	protected:
-		~RefCountedThreadSafe() = default;
+		virtual ~RefCountedThreadSafe() = default;
 
 	private:
 		friend struct DefaultRefCountedThreadSafeTraits<T>;

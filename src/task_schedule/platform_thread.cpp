@@ -1,4 +1,4 @@
-#include "platform_thread.h"
+﻿#include "platform_thread.h"
 #include <windows.h>
 #include <assert.h>
 
@@ -47,7 +47,8 @@ namespace task_schedule {
 	}
 
 	void PlatformThread::Join(PlatformThreadHandle thread_handle) {
-		assert(WAIT_OBJECT_0 == WaitForSingleObject(thread_handle.platform_handle(), INFINITE));
+		auto ret = WaitForSingleObject(thread_handle.platform_handle(), INFINITE);
+		assert(WAIT_OBJECT_0 == ret);
 		CloseHandle(thread_handle.platform_handle());
 	}
 

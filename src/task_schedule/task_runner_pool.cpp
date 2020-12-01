@@ -1,4 +1,4 @@
-#include "task_runner_pool.h"
+ï»¿#include "task_runner_pool.h"
 #include "include/post_task.h"
 
 namespace task_schedule {
@@ -23,17 +23,19 @@ namespace task_schedule {
 		return true;
 	}
 
-	void TaskRunnerPool::CleanupTasksImmediately() {
-		// Í£Ö¹½ÓÊÕÐÂÈÎÎñ
+	void TaskRunnerPool::CleanupTasksImmediately(bool disableForever) {
+		// åœæ­¢æŽ¥æ”¶æ–°ä»»åŠ¡
 		task_scheduler->DisableAdd(true);
-		// Çå¿ÕÎ´½øÐÐÈÎÎñ
+		// æ¸…ç©ºæœªè¿›è¡Œä»»åŠ¡
 		task_scheduler->CleanTasks();
-		// Èç¹ûÔÚÏß³Ì³ØÄÚ²¿£¬Ê¹ÓÃJoin£¬ÊÇ·Ç³£Î£ÏÕµÄ£¬ÕâÒ»Àà½Ó¿ÚÖ»ÄÜÔÚÏß³Ì³ØÏß³ÌµÄÍâ²¿µ÷ÓÃ
+		// å¦‚æžœåœ¨çº¿ç¨‹æ± å†…éƒ¨ï¼Œä½¿ç”¨Joinï¼Œæ˜¯éžå¸¸å±é™©çš„ï¼Œè¿™ä¸€ç±»æŽ¥å£åªèƒ½åœ¨çº¿ç¨‹æ± çº¿ç¨‹çš„å¤–éƒ¨è°ƒç”¨
 		thread_pool->Join();
+
+		if (!disableForever) task_scheduler->DisableAdd(false);
 	}
 
 	void TaskRunnerPool::StopAndWaitTasksFinish() {
-		// Í£Ö¹½ÓÊÕÐÂÈÎÎñ
+		// åœæ­¢æŽ¥æ”¶æ–°ä»»åŠ¡
 		task_scheduler->DisableAdd(true);
 		thread_pool->Join();
 	}

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "utils/macros.h"
 
 namespace task_schedule {
@@ -10,6 +10,8 @@ namespace task_schedule {
 		constexpr PlatformThreadHandle() : handle_(0) {}
 
 		explicit constexpr PlatformThreadHandle(Handle handle) : handle_(handle) {}
+
+		virtual ~PlatformThreadHandle() { handle_ = 0; }
 
 		bool is_equal(const PlatformThreadHandle& other) const {
 			return handle_ == other.handle_;

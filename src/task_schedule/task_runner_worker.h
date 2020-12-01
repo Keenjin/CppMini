@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "worker_thread.h"
 #include "task_runner.h"
 #include "task_scheduler.h"
@@ -15,7 +15,7 @@ namespace task_schedule {
 
 		// TaskRunner
 		virtual bool PostTask(OnceClosure task, TaskPriority priority = TaskPriority::NORMAL) override;
-		virtual void CleanupTasksImmediately() override;
+		virtual void CleanupTasksImmediately(bool disableForever = true) override;
 		virtual void StopAndWaitTasksFinish() override;
 		virtual uint32_t ThreadId() override {
 			return task_thread->ThreadId();
@@ -36,7 +36,7 @@ namespace task_schedule {
 		std::unique_ptr<TaskScheduler> task_scheduler;
 		utils::scoped_refptr<WorkerThread> task_thread;
 
-		// ¶ÓÁĞ¿ÕÊ±´¥·¢
+		// é˜Ÿåˆ—ç©ºæ—¶è§¦å‘
 		utils::WaitableEvent last_task_event;
 	};
 }

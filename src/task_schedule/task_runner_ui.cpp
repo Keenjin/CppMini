@@ -1,4 +1,4 @@
-#include "task_runner_ui.h"
+ï»¿#include "task_runner_ui.h"
 
 namespace task_schedule {
 
@@ -21,11 +21,13 @@ namespace task_schedule {
 		return true;
 	}
 
-	void TaskRunnerUI::CleanupTasksImmediately() {
+	void TaskRunnerUI::CleanupTasksImmediately(bool disableForever) {
 		task_scheduler->DisableAdd(true);
 		task_scheduler->CleanTasks();
 
 		WaitForLastTaskFinish();
+
+		if (!disableForever) task_scheduler->DisableAdd(false);
 	}
 
 	void TaskRunnerUI::StopAndWaitTasksFinish() {
@@ -35,7 +37,7 @@ namespace task_schedule {
 	}
 
 	void TaskRunnerUI::WaitForLastTaskFinish() {
-		// È·±£µ±Ç°Ïß³Ì£¬²¢·ÇÈÎÎñÏß³Ì¡£Èç¹ûÊÇÈÎÎñÏß³Ì£¬ÔòÎŞÄÔÇå¿Õ¶ÓÁĞ£¬ÕâÀïÀíÂÛÉÏ²»Ó¦¸Ã³öÏÖÕâÖÖµÈ´ı
+		// ç¡®ä¿å½“å‰çº¿ç¨‹ï¼Œå¹¶éä»»åŠ¡çº¿ç¨‹ã€‚å¦‚æœæ˜¯ä»»åŠ¡çº¿ç¨‹ï¼Œåˆ™æ— è„‘æ¸…ç©ºé˜Ÿåˆ—ï¼Œè¿™é‡Œç†è®ºä¸Šä¸åº”è¯¥å‡ºç°è¿™ç§ç­‰å¾…
 		if (msg_window->ThreadId() == GetCurrentThreadId()) {
 			task_scheduler->CleanTasks();
 			return;

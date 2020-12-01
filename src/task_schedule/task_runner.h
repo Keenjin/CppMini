@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "include/task_def.h"
 #include "utils/ref_counted.h"
 #include "include/task.h"
@@ -17,7 +17,7 @@ namespace task_schedule {
 			virtual void TaskDone(Task task, bool result) = 0;
 		};
 		virtual bool PostTask(OnceClosure task, TaskPriority priority = TaskPriority::NORMAL) = 0;
-		virtual void CleanupTasksImmediately() = 0;
+		virtual void CleanupTasksImmediately(bool disableForever = true) = 0;
 		virtual void StopAndWaitTasksFinish() = 0;
 		virtual uint32_t ThreadId() { return kThreadInvalidId; }
 

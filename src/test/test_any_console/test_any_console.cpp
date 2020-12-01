@@ -1,4 +1,4 @@
-// test_any_console.cpp : This file contains the 'main' function. Program execution begins and ends there.
+﻿// test_any_console.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
@@ -73,15 +73,54 @@ void FTest2() {
 }
 
 void FuncTest(int a, int b, void* context) {
-
+	
 }
+
+
+#include <windows.h>
+
+extern "C" WCHAR* sub_1025E453(WCHAR* a, WCHAR* b);
 
 int main()
 {
-	{
-		std::unique_ptr<char[]> testMemLeak(new char[100]);
-	}
+	HKEY keyResult = nullptr;
+	DWORD dwLen = 0;
+	if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE, L"SYSTEM\\ControlSet001\\Services\\nvlddmkm\\", 0, KEY_READ, &keyResult) &&
+		ERROR_SUCCESS == RegGetValueW(keyResult, 0, L"ImagePath", 2, 0, 0, &dwLen)) {
+		TCHAR *pPath = (TCHAR*)malloc(dwLen + sizeof(TCHAR));
+		ZeroMemory(pPath, dwLen + sizeof(TCHAR));
+		if (ERROR_SUCCESS == RegGetValueW(keyResult, 0, L"ImagePath", 2, 0, pPath, &dwLen)) {
+			sub_1025E453(pPath, (WCHAR*)L"System32");
 
+			dwLen = dwLen / 2;
+			// 将\SystemRoot\替换为GetSystemDirectW的值
+			TCHAR szRoot[13] = { 0 };
+			memcpy(szRoot, pPath, 12 * sizeof(TCHAR));
+			if (_wcsicmp(szRoot, L"\\SystemRoot\\") == 0) {
+				TCHAR szWinDir[1024] = { 0 };
+				GetSystemWindowsDirectoryW(szWinDir, 1023);
+				DWORD dwLenWin = wcslen(szWinDir);
+				TCHAR *pRealPath = (TCHAR*)malloc((dwLenWin + dwLen - 10) * sizeof(TCHAR));
+				ZeroMemory(pRealPath, (dwLenWin + dwLen - 10) * sizeof(TCHAR));
+				memcpy(pRealPath, szWinDir, dwLenWin * sizeof(TCHAR));
+				memcpy(pRealPath + dwLenWin, pPath + 11, (dwLen - 11) * sizeof(TCHAR));
+
+				DWORD dwAttr = GetFileAttributesW(pRealPath);
+				if (dwAttr != FILE_INVALID_FILE_ID) {
+					bool isSymlnk = dwAttr & FILE_ATTRIBUTE_REPARSE_POINT;
+
+					std::cout << isSymlnk;
+				}
+				
+
+				free(pRealPath);
+			}
+		}
+		free(pPath);
+	}
+	if (keyResult) {
+		RegCloseKey(keyResult);
+	}
 	
     std::cout << "Hello World!\n";
 
