@@ -35,3 +35,7 @@ build.dir/
 *.vcxproj.user
 .vs/
 bin/include/utils/
+Debug/
+Release/
+*.aps
+bin/
