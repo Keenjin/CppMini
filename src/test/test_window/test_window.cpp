@@ -38,6 +38,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+    STARTUPINFO si = { sizeof(STARTUPINFO) };
+    si.dwFlags = STARTF_FORCEOFFFEEDBACK;
+    si.wShowWindow = SW_HIDE;
+    PROCESS_INFORMATION pi = { 0 };
+    if (CreateProcess(L"C:\\Users\\Administrator\\Downloads\\curl-7.78.0_1-win32-mingw\\curl-7.78.0-win32-mingw\\bin\\curl.exe", (LPWSTR)L"https://www.baidu.com", NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)) {
+        CloseHandle(pi.hThread);
+        WaitForSingleObject(pi.hProcess, INFINITE);
+    }
+
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TESTWINDOW));
 
     MSG msg;
